@@ -1,3 +1,5 @@
+import "./globals.css";
+
 export const metadata = {
   title: "Link Sharing App",
   description: "Share your links to your friend.",
