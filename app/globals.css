@@ -8,6 +8,13 @@
     --color-custom-purple-600: #633CFF;
 }
 
+@layer base {
+    .autocomplete-highlight:has(input:-webkit-autofill) {
+        background-color: rgb(239 246 255) !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    }
+}
+
 .instrument-sans {
     font-family: var(--font-instrument-sans);
 }
