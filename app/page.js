@@ -21,7 +21,10 @@ export default function Home() {
           </p>
 
           <div className="mt-10">
-            <label className="instrument-sans font-normal text-xs text-custom-grey-900">
+            <label
+              htmlFor="email"
+              className="instrument-sans font-normal text-xs text-custom-grey-900"
+            >
               Email Address
             </label>
 
@@ -33,8 +36,47 @@ export default function Home() {
                 width={16}
                 height={16}
               />
+
+              <input
+                type="email"
+                name="email"
+                id="email"
+                className="instrument-sans font-normal text-base text-custom-grey-900 w-full h-full focus:outline-none"
+                placeholder="e.g. alex@email.com"
+              />
             </div>
           </div>
+
+          <div className="mt-6">
+            <label
+              htmlFor="password"
+              className="instrument-sans font-normal text-xs text-custom-grey-900"
+            >
+              Password
+            </label>
+
+            <div className="mt-2 w-[396px] border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/images/icon-password.svg"
+                alt="Email Icon"
+                width={16}
+                height={16}
+              />
+
+              <input
+                type="password"
+                name="password"
+                id="password"
+                className="instrument-sans font-normal text-base text-custom-grey-900 w-full h-full focus:outline-none"
+                placeholder="Enter your password"
+              />
+            </div>
+          </div>
+
+          <button type="button" className="mt-6 w-full rounded-lg py-4 text-center bg-custom-purple-600">
+            
+          </button>
         </form>
       </div>
     </main>
