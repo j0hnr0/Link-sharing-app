@@ -3,8 +3,14 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex justify-center items-center bg-custom-grey-50">
-      <div className="flex flex-col justify-center items-center gap-12">
+    <main
+      className="min-h-screen flex justify-center items-center bg-custom-grey-50
+    max-custom-sm:p-8 max-custom-sm:min-h-0"
+    >
+      <div
+        className="flex flex-col justify-center items-center gap-12
+      max-custom-sm:gap-16 max-custom-sm:items-start max-custom-sm:w-full"
+      >
         <Image
           src="/images/logo-devlinks-large.svg"
           width={182}
@@ -13,9 +19,15 @@ export default function Home() {
           priority
         />
 
-        <div className="bg-white rounded-xl p-10">
+        <div
+          className="w-[476px] bg-white rounded-xl p-10
+        max-custom-sm:bg-transparent max-custom-sm:w-full max-custom-sm:p-0"
+        >
           <form>
-            <h1 className="instrument-sans text-custom-grey-900 text-[32px] font-bold">
+            <h1
+              className="instrument-sans text-custom-grey-900 text-[32px] font-bold
+            max-custom-sm:text-2xl"
+            >
               Login
             </h1>
             <p className="instrument-sans font-normal text-base text-custom-grey-500">
@@ -30,7 +42,7 @@ export default function Home() {
                 Email Address
               </label>
 
-              <div className="autocomplete-highlight mt-2 w-[396px] border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+              <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/images/icon-email.svg"
@@ -57,7 +69,7 @@ export default function Home() {
                 Password
               </label>
 
-              <div className="autocomplete-highlight mt-2 w-[396px] border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+              <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/images/icon-password.svg"
@@ -89,6 +101,7 @@ export default function Home() {
           <div className="mt-6 text-center">
             <p className="instrument-sans font-normal text-base text-custom-grey-500">
               Don&apos;t have an account?{" "}
+              <br className="hidden max-custom-sm:block" />
               <span className="text-custom-purple-600">
                 <Link href="/">Create account</Link>
               </span>
