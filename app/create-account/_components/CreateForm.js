@@ -1,21 +1,22 @@
-import Input from "./Input";
-import Label from "./Label";
+import Button from "@/_components/Button";
+import Input from "@/_components/Input";
+import Label from "@/_components/Label";
 
-export default function Form() {
+export default function CreateForm() {
   return (
     <form>
       <h1
         className="instrument-sans text-custom-grey-900 text-[32px] font-bold
-            max-custom-sm:text-2xl"
+                max-custom-sm:text-2xl"
       >
-        Login
+        Create Account
       </h1>
       <p className="instrument-sans font-normal text-base text-custom-grey-500">
-        Add your details below to get back into the app
+        Let&apos;s get you started sharing your links!
       </p>
 
       <div className="mt-10">
-        <Label htmlFor="email">Email Address</Label>
+        <Label htmlFor="email">Email address</Label>
 
         <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -31,7 +32,7 @@ export default function Form() {
       </div>
 
       <div className="mt-6">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password">Create password</Label>
 
         <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
           {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -46,14 +47,7 @@ export default function Form() {
         </div>
       </div>
 
-      <button
-        type="button"
-        className="mt-6 w-full rounded-lg py-4 text-center bg-custom-purple-600"
-      >
-        <span className="instrument-sans text-base font-semibold text-white">
-          Login
-        </span>
-      </button>
+      <Button>Create new account</Button>
     </form>
   );
 }

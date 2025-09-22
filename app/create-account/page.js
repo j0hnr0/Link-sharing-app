@@ -1,22 +1,22 @@
-import Link from "next/link";
 import FormBackground from "@/_components/FormBackground";
-import LoginForm from "./_components/LoginForm";
+import Link from "next/link";
+import CreateForm from "./_components/CreateForm";
 
-export default function Home() {
+export default function CreateAccount() {
   return (
     <FormBackground>
       <div
         className="w-[476px] bg-white rounded-xl p-10
         max-custom-sm:bg-transparent max-custom-sm:w-full max-custom-sm:p-0"
       >
-        <LoginForm/>
-
+        <CreateForm />
+        
         <div className="mt-6 text-center">
           <p className="instrument-sans font-normal text-base text-custom-grey-500">
-            Don&apos;t have an account?{" "}
+            Already have an account?{" "}
             <br className="hidden max-custom-sm:block" />
             <span className="text-custom-purple-600">
-              <Link href="/create-account">Create account</Link>
+              <Link href="/">Login</Link>
             </span>
           </p>
         </div>
