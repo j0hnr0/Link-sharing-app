@@ -27,7 +27,12 @@ export default function CreateForm() {
             height={16}
           />
 
-          <Input type="email" placeholder="e.g. alex@email.com" />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="e.g. alex@email.com"
+          />
         </div>
       </div>
 
@@ -43,8 +48,40 @@ export default function CreateForm() {
             height={16}
           />
 
-          <Input type="password" placeholder="Enter your password" />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="At least 8 characters"
+          />
         </div>
+      </div>
+
+      <div className="mt-6">
+        <Label htmlFor="new-password">Confirm password</Label>
+
+        <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/icon-password.svg"
+            alt="Email Icon"
+            width={16}
+            height={16}
+          />
+
+          <Input
+            id="new-password"
+            name="new-password"
+            type="password"
+            placeholder="At least 8 characters"
+          />
+        </div>
+      </div>
+
+      <div className="mt-2">
+        <p className="instrument-sans font-normal text-xs text-custom-grey-500">
+          Password must contain at least 8 characters
+        </p>
       </div>
 
       <Button>Create new account</Button>

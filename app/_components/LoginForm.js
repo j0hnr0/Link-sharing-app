@@ -27,7 +27,12 @@ export default function LoginForm() {
             height={16}
           />
 
-          <Input type="email" placeholder="e.g. alex@email.com" />
+          <Input
+            id="email"
+            name="email"
+            type="email"
+            placeholder="e.g. alex@email.com"
+          />
         </div>
       </div>
 
@@ -43,7 +48,12 @@ export default function LoginForm() {
             height={16}
           />
 
-          <Input type="password" placeholder="Enter your password" />
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+          />
         </div>
       </div>
 
