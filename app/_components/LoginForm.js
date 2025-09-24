@@ -1,10 +1,24 @@
+"use client";
+
 import Button from "@/_components/Button";
 import Input from "@/_components/Input";
 import Label from "@/_components/Label";
+import clsx from "clsx";
+import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  function handleLoginForm() {
+    console.log("login");
+  }
+
   return (
-    <form>
+    <form onSubmit={handleSubmit(handleLoginForm)} noValidate>
       <h1
         className="instrument-sans text-custom-grey-900 text-[32px] font-bold
             max-custom-sm:text-2xl"
@@ -18,7 +32,15 @@ export default function LoginForm() {
       <div className="mt-10">
         <Label htmlFor="email">Email address</Label>
 
-        <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+        <div
+          className={clsx(
+            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
+            {
+              "border-custom-grey-200": !errors.email,
+              "border-red-500": errors.email,
+            }
+          )}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-email.svg"
@@ -32,6 +54,17 @@ export default function LoginForm() {
             name="email"
             type="email"
             placeholder="e.g. alex@email.com"
+            {...register("email", {
+              required: "Can't be empty",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Please enter a valid email address",
+              },
+              maxLength: {
+                value: 100,
+                message: "Please enter a valid email address",
+              },
+            })}
           />
         </div>
       </div>
@@ -39,7 +72,15 @@ export default function LoginForm() {
       <div className="mt-6">
         <Label htmlFor="password">Password</Label>
 
-        <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+        <div
+          className={clsx(
+            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
+            {
+              "border-custom-grey-200": !errors.password,
+              "border-red-500": errors.password,
+            }
+          )}
+        >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-password.svg"
@@ -53,6 +94,13 @@ export default function LoginForm() {
             name="password"
             type="password"
             placeholder="Enter your password"
+            {...register("password", {
+              required: "Can't be empty",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            })}
           />
         </div>
       </div>
