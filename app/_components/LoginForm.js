@@ -30,7 +30,9 @@ export default function LoginForm() {
       </p>
 
       <div className="mt-10">
-        <Label htmlFor="email">Email address</Label>
+        <Label htmlFor="email" error={errors.email?.message}>
+          Email address
+        </Label>
 
         <div
           className={clsx(
@@ -70,38 +72,43 @@ export default function LoginForm() {
       </div>
 
       <div className="mt-6">
-        <Label htmlFor="password">Password</Label>
+        <Label htmlFor="password" error={errors.password?.message}>
+          Password
+        </Label>
 
         <div
           className={clsx(
-            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
+            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-between items-center`,
             {
               "border-custom-grey-200": !errors.password,
               "border-red-500": errors.password,
             }
           )}
         >
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img
-            src="/images/icon-password.svg"
-            alt="Email Icon"
-            width={16}
-            height={16}
-          />
+          <div className="flex justify-start items-center gap-4">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/icon-password.svg"
+              alt="Email Icon"
+              width={16}
+              height={16}
+            />
 
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter your password"
-            {...register("password", {
-              required: "Can't be empty",
-              minLength: {
-                value: 8,
-                message: "Password must be at least 8 characters",
-              },
-            })}
-          />
+            <Input
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              {...register("password", {
+                required: "Can't be empty",
+              })}
+            />
+          </div>
+          {errors.password?.message && (
+            <small className="block instrument-sans font-normal text-xs text-red-500">
+              {errors.password.message}
+            </small>
+          )}
         </div>
       </div>
 
