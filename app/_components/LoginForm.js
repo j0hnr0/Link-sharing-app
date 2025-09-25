@@ -69,49 +69,59 @@ export default function LoginForm() {
             })}
           />
         </div>
+        {errors.email?.message && (
+          <div className="mt-2 flex justify-end">
+            <small className="instrument-sans font-normal text-xs text-red-500">
+              {errors.email.message}
+            </small>
+          </div>
+        )}
       </div>
 
-      <div className="mt-6">
+      <div className="mt-2.5">
         <Label htmlFor="password" error={errors.password?.message}>
           Password
         </Label>
 
         <div
           className={clsx(
-            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-between items-center`,
+            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
             {
               "border-custom-grey-200": !errors.password,
               "border-red-500": errors.password,
             }
           )}
         >
-          <div className="flex justify-start items-center gap-4">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/icon-password.svg"
-              alt="Email Icon"
-              width={16}
-              height={16}
-            />
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src="/images/icon-password.svg"
+            alt="Email Icon"
+            width={16}
+            height={16}
+          />
 
-            <Input
-              id="password"
-              name="password"
-              type="password"
-              placeholder="Enter your password"
-              {...register("password", {
-                required: "Can't be empty",
-              })}
-            />
-          </div>
-          {errors.password?.message && (
-            <small className="block instrument-sans font-normal text-xs text-red-500">
+          <Input
+            id="password"
+            name="password"
+            type="password"
+            placeholder="Enter your password"
+            {...register("password", {
+              required: "Can't be empty",
+              minLength: {
+                value: 8,
+                message: "Password must be at least 8 characters",
+              },
+            })}
+          />
+        </div>
+        {errors.password?.message && (
+          <div className="mt-2 flex justify-end">
+            <small className="instrument-sans font-normal text-xs text-red-500">
               {errors.password.message}
             </small>
-          )}
-        </div>
+          </div>
+        )}
       </div>
-
       <Button>Login</Button>
     </form>
   );
