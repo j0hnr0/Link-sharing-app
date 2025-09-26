@@ -5,7 +5,6 @@ import Input from "@/_components/Input";
 import InputContainer from "@/_components/InputContainer";
 import InputErrorMessage from "@/_components/InputErrorMessage";
 import Label from "@/_components/Label";
-import clsx from "clsx";
 import { useForm } from "react-hook-form";
 
 export default function CreateForm() {
