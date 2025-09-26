@@ -2,6 +2,8 @@
 
 import Button from "@/_components/Button";
 import Input from "@/_components/Input";
+import InputContainer from "@/_components/InputContainer";
+import InputErrorMessage from "@/_components/InputErrorMessage";
 import Label from "@/_components/Label";
 import clsx from "clsx";
 import { useForm } from "react-hook-form";
@@ -10,8 +12,11 @@ export default function CreateForm() {
   const {
     register,
     handleSubmit,
+    watch,
     formState: { errors },
   } = useForm();
+
+  const password = watch("password", "");
 
   function handleCreateForm() {
     console.log("create");
@@ -34,15 +39,7 @@ export default function CreateForm() {
           Email address
         </Label>
 
-        <div
-          className={clsx(
-            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
-            {
-              "border-custom-grey-200": !errors.email,
-              "border-red-500": errors.email,
-            }
-          )}
-        >
+        <InputContainer error={errors.email}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-email.svg"
@@ -68,14 +65,8 @@ export default function CreateForm() {
               },
             })}
           />
-        </div>
-        {errors.email?.message && (
-          <div className="mt-2 flex justify-end">
-            <small className="instrument-sans font-normal text-xs text-red-500">
-              {errors.email.message}
-            </small>
-          </div>
-        )}
+        </InputContainer>
+        <InputErrorMessage error={errors.email?.message} />
       </div>
 
       <div className="mt-2.5">
@@ -83,15 +74,7 @@ export default function CreateForm() {
           Create password
         </Label>
 
-        <div
-          className={clsx(
-            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
-            {
-              "border-custom-grey-200": !errors.password,
-              "border-red-500": errors.password,
-            }
-          )}
-        >
+        <InputContainer error={errors.password}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-password.svg"
@@ -127,13 +110,16 @@ export default function CreateForm() {
               },
             })}
           />
-        </div>
+        </InputContainer>
+        <InputErrorMessage error={errors.password?.message} />
       </div>
 
       <div className="mt-2.5">
-        <Label htmlFor="new-password">Confirm password</Label>
+        <Label htmlFor="new-password" error={errors.confirmPassword?.message}>
+          Confirm password
+        </Label>
 
-        <div className="autocomplete-highlight mt-2 w-full border border-custom-grey-200 rounded-lg p-4 flex justify-start items-center gap-4">
+        <InputContainer error={errors.confirmPassword}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-password.svg"
@@ -147,8 +133,14 @@ export default function CreateForm() {
             name="new-password"
             type="password"
             placeholder="At least 8 characters"
+            {...register("confirmPassword", {
+              required: "Please confirm your password",
+              validate: (value) =>
+                value === password || "The passwords do not match",
+            })}
           />
-        </div>
+        </InputContainer>
+        <InputErrorMessage error={errors.confirmPassword?.message} />
       </div>
 
       <div className="mt-2">

@@ -2,8 +2,9 @@
 
 import Button from "@/_components/Button";
 import Input from "@/_components/Input";
+import InputContainer from "@/_components/InputContainer";
+import InputErrorMessage from "@/_components/InputErrorMessage";
 import Label from "@/_components/Label";
-import clsx from "clsx";
 import { useForm } from "react-hook-form";
 
 export default function LoginForm() {
@@ -34,15 +35,7 @@ export default function LoginForm() {
           Email address
         </Label>
 
-        <div
-          className={clsx(
-            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
-            {
-              "border-custom-grey-200": !errors.email,
-              "border-red-500": errors.email,
-            }
-          )}
-        >
+        <InputContainer error={errors.email}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-email.svg"
@@ -68,14 +61,8 @@ export default function LoginForm() {
               },
             })}
           />
-        </div>
-        {errors.email?.message && (
-          <div className="mt-2 flex justify-end">
-            <small className="instrument-sans font-normal text-xs text-red-500">
-              {errors.email.message}
-            </small>
-          </div>
-        )}
+        </InputContainer>
+        <InputErrorMessage error={errors.email?.message} />
       </div>
 
       <div className="mt-2.5">
@@ -83,15 +70,7 @@ export default function LoginForm() {
           Password
         </Label>
 
-        <div
-          className={clsx(
-            `autocomplete-highlight mt-2 w-full border rounded-lg p-4 flex justify-start items-center gap-4`,
-            {
-              "border-custom-grey-200": !errors.password,
-              "border-red-500": errors.password,
-            }
-          )}
-        >
+        <InputContainer error={errors.password}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             src="/images/icon-password.svg"
@@ -113,15 +92,10 @@ export default function LoginForm() {
               },
             })}
           />
-        </div>
-        {errors.password?.message && (
-          <div className="mt-2 flex justify-end">
-            <small className="instrument-sans font-normal text-xs text-red-500">
-              {errors.password.message}
-            </small>
-          </div>
-        )}
+        </InputContainer>
+        <InputErrorMessage error={errors.password?.message} />
       </div>
+
       <Button>Login</Button>
     </form>
   );
