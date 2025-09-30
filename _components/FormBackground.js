@@ -1,4 +1,4 @@
-import Image from "next/image";
+import Logo from "./Logo";
 
 export default function FormBackground({ children }) {
   return (
@@ -10,13 +10,7 @@ export default function FormBackground({ children }) {
         className="flex flex-col justify-center items-center gap-12
       max-custom-sm:gap-16 max-custom-sm:items-start max-custom-sm:w-full"
       >
-        <Image
-          src="/images/logo-devlinks-large.svg"
-          width={182}
-          height={40}
-          alt="DevLinks Logo"
-          priority
-        />
+        <Logo />
 
         {children}
       </div>
