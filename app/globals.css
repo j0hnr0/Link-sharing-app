@@ -7,7 +7,8 @@
     --color-custom-grey-500: #737373;
     --color-custom-grey-200: #D9D9D9;
     --color-custom-purple-600: #633CFF;
-    --breakpoint-custom-sm: 475px;
+    --breakpoint-custom-sm: 476px;
+    --breakpoint-custom-md: 769px;
 }
 
 @layer base {
