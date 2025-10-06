@@ -7,7 +7,6 @@ export default function Logo({ ...props }) {
       width={182}
       height={40}
       alt="DevLinks Logo"
-      priority
       {...props}
     />
   );

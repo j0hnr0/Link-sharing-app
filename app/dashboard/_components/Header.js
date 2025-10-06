@@ -14,7 +14,6 @@ export default function Header() {
         width={32}
         height={32}
         alt="Small Logo icon"
-        priority
         className="max-custom-semism:block hidden"
       />
 
@@ -45,7 +44,6 @@ export default function Header() {
           width={20}
           height={20}
           alt="Small Logo icon"
-          priority
           className="max-custom-semism:block hidden"
         />
         <span className="max-custom-semism:hidden block instrument-sans font-semibold text-base text-custom-purple-600">
