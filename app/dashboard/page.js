@@ -18,6 +18,12 @@ export default function Dashboard() {
             alt="A Phone Mockup"
           />
         </div>
+
+        <div className="bg-white rounded-xl pt-10 px-10 pb-6">
+          <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900">
+            Customize your links
+          </h1>
+        </div>
       </div>
     </main>
   );
