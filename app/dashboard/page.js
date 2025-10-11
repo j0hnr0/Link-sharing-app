@@ -9,7 +9,10 @@ export default function Dashboard() {
     >
       <Header />
 
-      <div className="mt-6 flex gap-6">
+      <div
+        className="mt-6 flex gap-6
+      max-custom-semism:m-4"
+      >
         <div
           className="w-[40%] bg-white rounded-xl py-[116px]
         max-custom-md:hidden"
@@ -27,8 +30,10 @@ export default function Dashboard() {
           className="w-[60%]
         max-custom-md:w-full"
         >
-          <div className="bg-white rounded-t-xl p-10">
-            <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900">
+          <div className="bg-white rounded-t-xl p-10
+          max-custom-semism:p-6">
+            <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900
+            max-custom-semism:text-2xl">
               Customize your links
             </h1>
             <p className="mt-2 instrument-sans font-normal text-base text-custom-grey-500">
@@ -45,16 +50,19 @@ export default function Dashboard() {
               </span>
             </button>
 
-            <div className="mt-6 w-full rounded-xl bg-custom-grey-50 py-[67px]">
+            <div className="mt-6 w-full rounded-xl bg-custom-grey-50 py-[67px]
+            max-custom-semism:py-[31px] max-custom-semism:px-6">
               <Image
                 src="/images/illustration-empty.svg"
-                className="mx-auto"
+                className="mx-auto
+                max-custom-semism:w-[124px]"
                 width={249}
                 height={160}
                 alt="A hand clicking on a phone"
               />
 
-              <h1 className="mt-10 text-center instrument-sans font-bold text-[32px] text-custom-grey-900">
+              <h1 className="mt-10 text-center instrument-sans font-bold text-[32px] text-custom-grey-900
+              max-custom-semism:text-2xl">
                 Let&apos;s get you started
               </h1>
 
@@ -68,11 +76,13 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className="bg-white rounded-b-xl py-6 px-10 border-t border-custom-grey-200">
+          <div className="bg-white rounded-b-xl py-6 px-10 border-t border-custom-grey-200
+          max-custom-semism:p-4">
             <div className="flex justify-end">
               <button
                 type="button"
-                className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 opacity-25 cursor-pointer"
+                className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 opacity-25 cursor-pointer
+                max-custom-semism:w-full"
               >
                 <span className="instrument-sans font-semibold text-base text-white">
                   Save
