@@ -7,7 +7,7 @@ export default function PhoneMockup() {
         max-custom-md:hidden"
     >
       <Image
-        src="/images/illustration-phone-mockup.svg"
+        src="/images/phone-cover.png"
         className="mx-auto"
         width={307}
         height={631}
