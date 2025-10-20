@@ -41,7 +41,38 @@ export default function CustomizeLinks() {
         </button>
 
         {click ? (
-          <h1>Clicked</h1>
+          <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
+            <div className="flex justify-between items-center">
+              <div className="flex justify-start items-center gap-2">
+                <div className="flex flex-col justify-center items-start gap-1">
+                  <div className="w-3 h-[1px] bg-custom-grey-500"></div>
+                  <div className="w-3 h-[1px] bg-custom-grey-500"></div>
+                </div>
+                <p className="instrument-sans font-bold text-base text-custom-grey-500">
+                  Link #1
+                </p>
+              </div>
+
+              <button
+                type="button"
+                className="instrument-sans font-normal text-base text-custom-grey-500 cursor-pointer"
+              >
+                Remove
+              </button>
+            </div>
+
+            <div className="mt-4">
+              <small className="instrument-sans font-normal text-xs text-custom-grey-900">
+                Platform
+              </small>
+              <select className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 focus:outline-none">
+                <option value="">Select an option</option>
+                <option value="1">Option 1</option>
+                <option value="2">Option 2</option>
+                <option value="3">Option 3</option>
+              </select>
+            </div>
+          </div>
         ) : (
           <div
             className="mt-6 w-full rounded-xl bg-custom-grey-50 py-[67px]
