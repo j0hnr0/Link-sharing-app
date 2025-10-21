@@ -1,6 +1,6 @@
 "use client";
 
-import { Select, SelectTrigger } from "@/components/ui/select";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -66,8 +66,31 @@ export default function CustomizeLinks() {
               <small className="instrument-sans font-normal text-xs text-custom-grey-900">
                 Platform
               </small>
-              <Select>
-                <SelectTrigger className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 focus:outline-none" />
+              <Select defaultValue="1">
+                <SelectTrigger className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4">
+                    <SelectValue className="instrument-sans font-normal text-base text-custom-grey-900" placeholder="Select Link" />
+                </SelectTrigger>
+
+                <SelectContent>
+                  <SelectItem value="1">
+                    <div className="flex justify-start items-center gap-4">
+                        <Image src="/images/icon-github.svg" width={16} height={16} alt="Github icon" />
+                        <span className="instrument-sans font-normal text-base text-custom-grey-900">GitHub</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="2">
+                    <div className="flex justify-start items-center gap-4">
+                        <Image src="/images/icon-github.svg" width={16} height={16} alt="Github icon" />
+                        <span className="instrument-sans font-normal text-base text-custom-grey-900">GitHub</span>
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="3">
+                    <div className="flex justify-start items-center gap-4">
+                        <Image src="/images/icon-github.svg" width={16} height={16} alt="Github icon" />
+                        <span className="instrument-sans font-normal text-base text-custom-grey-900">GitHub</span>
+                    </div>
+                  </SelectItem>
+                </SelectContent>
               </Select>
             </div>
 
