@@ -1,5 +1,6 @@
 "use client";
 
+import { Select, SelectTrigger } from "@/components/ui/select";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -65,12 +66,30 @@ export default function CustomizeLinks() {
               <small className="instrument-sans font-normal text-xs text-custom-grey-900">
                 Platform
               </small>
-              <select className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 focus:outline-none">
-                <option value="">Select an option</option>
-                <option value="1">Option 1</option>
-                <option value="2">Option 2</option>
-                <option value="3">Option 3</option>
-              </select>
+              <Select>
+                <SelectTrigger className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 focus:outline-none" />
+              </Select>
+            </div>
+
+            <div className="mt-4">
+              <small className="instrument-sans font-normal text-xs text-custom-grey-900">
+                Link
+              </small>
+              <div className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 flex justify-start items-center gap-4">
+                <Image
+                  src="/images/icon-link.svg"
+                  width={16}
+                  height={16}
+                  alt="Link Icon"
+                />
+                <input
+                  type="text"
+                  id="link"
+                  name="link"
+                  className="w-full h-full focus:outline-none"
+                  placeholder="e.g. https://www.github.com/johnappleseed"
+                />
+              </div>
             </div>
           </div>
         ) : (
