@@ -1,14 +1,16 @@
 "use client";
 
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import Image from "next/image";
 import { useState } from "react";
+import LinkFormContainer from "./LinkFormContainer";
+import EmptyLinkContainer from "./EmptyLinkContainer";
 
 export default function CustomizeLinks() {
-  const [click, setClick] = useState(false);
+  const [forms, setForms] = useState([]);
+  const [nextId, setNextId] = useState(1);
 
-  function handleClick() {
-    setClick((prev) => !prev);
+  function addForm() {
+    setForms([...forms, { id: nextId }]);
+    setNextId(nextId + 1);
   }
 
   return (
@@ -33,7 +35,7 @@ export default function CustomizeLinks() {
 
         <button
           type="button"
-          onClick={handleClick}
+          onClick={addForm}
           className="mt-10 w-full rounded-lg border border-custom-purple-600 py-4 text-center cursor-pointer"
         >
           <span className="instrument-sans font-semibold text-base text-custom-purple-600">
@@ -41,109 +43,10 @@ export default function CustomizeLinks() {
           </span>
         </button>
 
-        {click ? (
-          <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
-            <div className="flex justify-between items-center">
-              <div className="flex justify-start items-center gap-2">
-                <div className="flex flex-col justify-center items-start gap-1">
-                  <div className="w-3 h-[1px] bg-custom-grey-500"></div>
-                  <div className="w-3 h-[1px] bg-custom-grey-500"></div>
-                </div>
-                <p className="instrument-sans font-bold text-base text-custom-grey-500">
-                  Link #1
-                </p>
-              </div>
-
-              <button
-                type="button"
-                className="instrument-sans font-normal text-base text-custom-grey-500 cursor-pointer"
-              >
-                Remove
-              </button>
-            </div>
-
-            <div className="mt-4">
-              <small className="instrument-sans font-normal text-xs text-custom-grey-900">
-                Platform
-              </small>
-              <Select defaultValue="1">
-                <SelectTrigger className="mt-2 w-full !h-auto rounded-lg border border-custom-grey-200 bg-white p-4">
-                    <SelectValue className="instrument-sans font-normal text-base text-custom-grey-900" placeholder="Select Link" />
-                </SelectTrigger>
-
-                <SelectContent>
-                  <SelectItem value="1">
-                    <div className="flex justify-start items-center gap-4">
-                        <Image src="/images/icon-github.svg" width={16} height={16} alt="Github icon" />
-                        <span className="instrument-sans font-normal text-base text-custom-grey-900">GitHub</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="2">
-                    <div className="flex justify-start items-center gap-4">
-                        <Image src="/images/icon-codepen.svg" width={16} height={16} alt="Codepen icon" />
-                        <span className="instrument-sans font-normal text-base text-custom-grey-900">CodePen</span>
-                    </div>
-                  </SelectItem>
-                  <SelectItem value="3">
-                    <div className="flex justify-start items-center gap-4">
-                        <Image src="/images/icon-codewars.svg" width={16} height={16} alt="Codewars icon" />
-                        <span className="instrument-sans font-normal text-base text-custom-grey-900">CodeWars</span>
-                    </div>
-                  </SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="mt-4">
-              <small className="instrument-sans font-normal text-xs text-custom-grey-900">
-                Link
-              </small>
-              <div className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-link.svg"
-                  width={16}
-                  height={16}
-                  alt="Link Icon"
-                />
-                <input
-                  type="text"
-                  id="link"
-                  name="link"
-                  className="w-full h-full focus:outline-none"
-                  placeholder="e.g. https://www.github.com/johnappleseed"
-                />
-              </div>
-            </div>
-          </div>
+        {forms.length > 0 ? (
+          forms.map((form) => <LinkFormContainer key={form.id} formId={form.id} />)
         ) : (
-          <div
-            className="mt-6 w-full rounded-xl bg-custom-grey-50 py-[67px]
-            max-custom-semism:py-[31px] max-custom-semism:px-6"
-          >
-            <Image
-              src="/images/illustration-empty.svg"
-              className="mx-auto
-                max-custom-semism:w-[124px]"
-              width={249}
-              height={160}
-              alt="A hand clicking on a phone"
-            />
-
-            <h1
-              className="mt-10 text-center instrument-sans font-bold text-[32px] text-custom-grey-900
-              max-custom-semism:text-2xl"
-            >
-              Let&apos;s get you started
-            </h1>
-
-            <div className="mt-6 max-w-[488px] mx-auto text-center">
-              <p className="instrument-sans font-normal text-base text-custom-grey-500">
-                Use the “Add new link” button to get started. Once you have more
-                than one link, you can reorder and edit them. We’re here to help
-                you share your profiles with everyone!
-              </p>
-            </div>
-          </div>
+          <EmptyLinkContainer />
         )}
       </div>
 
