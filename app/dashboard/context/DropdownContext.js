@@ -5,7 +5,7 @@ import { createContext, useContext, useState } from "react";
 const DropdownContext = createContext();
 
 export function DropdownProvider({ children }) {
-  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
 
   const dropDownOptions = [
     {
@@ -94,8 +94,18 @@ export function DropdownProvider({ children }) {
     },
   ];
 
+  const selectedOption =
+    dropDownOptions.find((option) => option.id === selectedValue) || null;
+
   return (
-    <DropdownContext.Provider value={{ selectedOption, setSelectedOption, dropDownOptions }}>
+    <DropdownContext.Provider
+      value={{
+        selectedValue,
+        setSelectedValue,
+        dropDownOptions,
+        selectedOption,
+      }}
+    >
       {children}
     </DropdownContext.Provider>
   );

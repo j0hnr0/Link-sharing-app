@@ -11,7 +11,7 @@ import Image from "next/image";
 import { useDropdown } from "../context/DropDownContext";
 
 export default function LinkFormContainer({ formId, removeForm }) {
-  const { dropDownOptions } = useDropdown();
+  const { selectedValue, setSelectedValue, dropDownOptions } = useDropdown();
 
   return (
     <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
@@ -39,7 +39,7 @@ export default function LinkFormContainer({ formId, removeForm }) {
         <small className="instrument-sans font-normal text-xs text-custom-grey-900">
           Platform
         </small>
-        <Select defaultValue="1">
+        <Select value={selectedValue} onValueChange={setSelectedValue}>
           <SelectTrigger className="mt-2 w-full !h-auto rounded-lg border border-custom-grey-200 bg-white p-4">
             <SelectValue
               className="instrument-sans font-normal text-base text-custom-grey-900"
