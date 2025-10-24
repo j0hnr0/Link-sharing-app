@@ -8,11 +8,78 @@ import {
 import Image from "next/image";
 
 export default function LinkFormContainer({ formId, removeForm }) {
-  const dropDownOptions = [{
-
-  }];
-
-
+  const dropDownOptions = [
+    {
+      fileName: "icon-codepen.svg",
+      alt: "CodePen Icon",
+      text: "CodePen",
+    },
+    {
+      fileName: "icon-codewars.svg",
+      alt: "CodeWars Icon",
+      text: "CodeWars",
+    },
+    {
+      fileName: "icon-devto.svg",
+      alt: "Dev.to Icon",
+      text: "Dev.to",
+    },
+    {
+      fileName: "icon-facebook.svg",
+      alt: "Facebook Icon",
+      text: "Facebook",
+    },
+    {
+      fileName: "icon-freecodecamp.svg",
+      alt: "freeCodeCamp Icon",
+      text: "freeCodeCamp",
+    },
+    {
+      fileName: "icon-frontend-mentor.svg",
+      alt: "Frontend Mentor Icon",
+      text: "Frontend Mentor",
+    },
+    {
+      fileName: "icon-github.svg",
+      alt: "GitHub Icon",
+      text: "GitHub",
+    },
+    {
+      fileName: "icon-gitlab.svg",
+      alt: "GitLab Icon",
+      text: "GitLab",
+    },
+    {
+      fileName: "icon-hashnode.svg",
+      alt: "Hashnode Icon",
+      text: "Hashnode",
+    },
+    {
+      fileName: "icon-linkedin.svg",
+      alt: "LinkedIn Icon",
+      text: "LinkedIn",
+    },
+    {
+      fileName: "icon-stack-overflow.svg",
+      alt: "Stack Overflow Icon",
+      text: "Stack Overflow",
+    },
+    {
+      fileName: "icon-twitch.svg",
+      alt: "Twitch Icon",
+      text: "Twitch",
+    },
+    {
+      fileName: "icon-twitter.svg",
+      alt: "Twitter Icon",
+      text: "Twitter",
+    },
+    {
+      fileName: "icon-youtube.svg",
+      alt: "YouTube Icon",
+      text: "YouTube",
+    },
+  ];
 
   return (
     <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
@@ -49,84 +116,21 @@ export default function LinkFormContainer({ formId, removeForm }) {
           </SelectTrigger>
 
           <SelectContent>
-            <SelectItem value="1">
-              <div className="flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-github.svg"
-                  width={16}
-                  height={16}
-                  alt="Github icon"
-                />
-                <span className="instrument-sans font-normal text-base text-custom-grey-900">
-                  GitHub
-                </span>
-              </div>
-            </SelectItem>
-            <SelectItem value="2">
-              <div className="flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-codepen.svg"
-                  width={16}
-                  height={16}
-                  alt="Codepen icon"
-                />
-                <span className="instrument-sans font-normal text-base text-custom-grey-900">
-                  CodePen
-                </span>
-              </div>
-            </SelectItem>
-            <SelectItem value="3">
-              <div className="flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-codewars.svg"
-                  width={16}
-                  height={16}
-                  alt="Codewars icon"
-                />
-                <span className="instrument-sans font-normal text-base text-custom-grey-900">
-                  CodeWars
-                </span>
-              </div>
-            </SelectItem>
-            <SelectItem value="4">
-              <div className="flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-devto.svg"
-                  width={16}
-                  height={16}
-                  alt="Dev.to icon"
-                />
-                <span className="instrument-sans font-normal text-base text-custom-grey-900">
-                  Dev.to
-                </span>
-              </div>
-            </SelectItem>
-            <SelectItem value="5">
-              <div className="flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-facebook.svg"
-                  width={16}
-                  height={16}
-                  alt="Facebook icon"
-                />
-                <span className="instrument-sans font-normal text-base text-custom-grey-900">
-                  Facebook
-                </span>
-              </div>
-            </SelectItem>
-            <SelectItem value="6">
-              <div className="flex justify-start items-center gap-4">
-                <Image
-                  src="/images/icon-freecodecamp.svg"
-                  width={16}
-                  height={16}
-                  alt="Dev.to icon"
-                />
-                <span className="instrument-sans font-normal text-base text-custom-grey-900">
-                  Dev.to
-                </span>
-              </div>
-            </SelectItem>
+            {dropDownOptions.map((option, index) => (
+              <SelectItem key={index} value={index.toString()}>
+                <div className="flex justify-start items-center gap-4">
+                  <Image
+                    src={`/images/${option.fileName}`}
+                    width={16}
+                    height={16}
+                    alt={option.alt}
+                  />
+                  <span className="instrument-sans font-normal text-base text-custom-grey-900">
+                    {option.text}
+                  </span>
+                </div>
+              </SelectItem>
+            ))}
           </SelectContent>
         </Select>
       </div>
