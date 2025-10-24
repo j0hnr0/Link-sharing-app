@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   Select,
@@ -48,8 +48,8 @@ export default function LinkFormContainer({ formId, removeForm }) {
           </SelectTrigger>
 
           <SelectContent>
-            {dropDownOptions.map((option, index) => (
-              <SelectItem key={index} value={index.toString()}>
+            {dropDownOptions.map((option) => (
+              <SelectItem key={option.id} value={option.id}>
                 <div className="flex justify-start items-center gap-4">
                   <Image
                     src={`/images/${option.fileName}`}
