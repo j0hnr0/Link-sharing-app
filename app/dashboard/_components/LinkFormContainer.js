@@ -1,3 +1,5 @@
+'use client';
+
 import {
   Select,
   SelectContent,
@@ -6,80 +8,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import Image from "next/image";
+import { useDropdown } from "../context/DropDownContext";
 
 export default function LinkFormContainer({ formId, removeForm }) {
-  const dropDownOptions = [
-    {
-      fileName: "icon-codepen.svg",
-      alt: "CodePen Icon",
-      text: "CodePen",
-    },
-    {
-      fileName: "icon-codewars.svg",
-      alt: "CodeWars Icon",
-      text: "CodeWars",
-    },
-    {
-      fileName: "icon-devto.svg",
-      alt: "Dev.to Icon",
-      text: "Dev.to",
-    },
-    {
-      fileName: "icon-facebook.svg",
-      alt: "Facebook Icon",
-      text: "Facebook",
-    },
-    {
-      fileName: "icon-freecodecamp.svg",
-      alt: "freeCodeCamp Icon",
-      text: "freeCodeCamp",
-    },
-    {
-      fileName: "icon-frontend-mentor.svg",
-      alt: "Frontend Mentor Icon",
-      text: "Frontend Mentor",
-    },
-    {
-      fileName: "icon-github.svg",
-      alt: "GitHub Icon",
-      text: "GitHub",
-    },
-    {
-      fileName: "icon-gitlab.svg",
-      alt: "GitLab Icon",
-      text: "GitLab",
-    },
-    {
-      fileName: "icon-hashnode.svg",
-      alt: "Hashnode Icon",
-      text: "Hashnode",
-    },
-    {
-      fileName: "icon-linkedin.svg",
-      alt: "LinkedIn Icon",
-      text: "LinkedIn",
-    },
-    {
-      fileName: "icon-stack-overflow.svg",
-      alt: "Stack Overflow Icon",
-      text: "Stack Overflow",
-    },
-    {
-      fileName: "icon-twitch.svg",
-      alt: "Twitch Icon",
-      text: "Twitch",
-    },
-    {
-      fileName: "icon-twitter.svg",
-      alt: "Twitter Icon",
-      text: "Twitter",
-    },
-    {
-      fileName: "icon-youtube.svg",
-      alt: "YouTube Icon",
-      text: "YouTube",
-    },
-  ];
+  const { dropDownOptions } = useDropdown();
 
   return (
     <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
