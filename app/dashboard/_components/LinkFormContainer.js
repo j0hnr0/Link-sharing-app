@@ -7,7 +7,13 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 
-export default function LinkFormContainer({ formId }) {
+export default function LinkFormContainer({ formId, removeForm }) {
+  const dropDownOptions = [{
+
+  }];
+
+
+
   return (
     <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
       <div className="flex justify-between items-center">
@@ -23,6 +29,7 @@ export default function LinkFormContainer({ formId }) {
 
         <button
           type="button"
+          onClick={() => removeForm(formId)}
           className="instrument-sans font-normal text-base text-custom-grey-500 cursor-pointer"
         >
           Remove
@@ -78,6 +85,45 @@ export default function LinkFormContainer({ formId }) {
                 />
                 <span className="instrument-sans font-normal text-base text-custom-grey-900">
                   CodeWars
+                </span>
+              </div>
+            </SelectItem>
+            <SelectItem value="4">
+              <div className="flex justify-start items-center gap-4">
+                <Image
+                  src="/images/icon-devto.svg"
+                  width={16}
+                  height={16}
+                  alt="Dev.to icon"
+                />
+                <span className="instrument-sans font-normal text-base text-custom-grey-900">
+                  Dev.to
+                </span>
+              </div>
+            </SelectItem>
+            <SelectItem value="5">
+              <div className="flex justify-start items-center gap-4">
+                <Image
+                  src="/images/icon-facebook.svg"
+                  width={16}
+                  height={16}
+                  alt="Facebook icon"
+                />
+                <span className="instrument-sans font-normal text-base text-custom-grey-900">
+                  Facebook
+                </span>
+              </div>
+            </SelectItem>
+            <SelectItem value="6">
+              <div className="flex justify-start items-center gap-4">
+                <Image
+                  src="/images/icon-freecodecamp.svg"
+                  width={16}
+                  height={16}
+                  alt="Dev.to icon"
+                />
+                <span className="instrument-sans font-normal text-base text-custom-grey-900">
+                  Dev.to
                 </span>
               </div>
             </SelectItem>

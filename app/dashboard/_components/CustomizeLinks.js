@@ -13,6 +13,10 @@ export default function CustomizeLinks() {
     setNextId(nextId + 1);
   }
 
+  function removeForm(idToRemove) {
+    setForms(forms.filter((form) => form.id !== idToRemove));
+  }
+
   return (
     <div
       className="w-[60%]
@@ -44,7 +48,13 @@ export default function CustomizeLinks() {
         </button>
 
         {forms.length > 0 ? (
-          forms.map((form) => <LinkFormContainer key={form.id} formId={form.id} />)
+          forms.map((form) => (
+            <LinkFormContainer
+              key={form.id}
+              formId={form.id}
+              removeForm={removeForm}
+            />
+          ))
         ) : (
           <EmptyLinkContainer />
         )}
