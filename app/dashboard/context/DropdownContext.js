@@ -5,7 +5,7 @@ import { createContext, useContext, useState } from "react";
 const DropdownContext = createContext();
 
 export function DropdownProvider({ children }) {
-  const [selectedValue, setSelectedValue] = useState("");
+  const [formSelections, setFormSelections] = useState({});
 
   const dropDownOptions = [
     {
@@ -94,16 +94,23 @@ export function DropdownProvider({ children }) {
     },
   ];
 
-  const selectedOption =
-    dropDownOptions.find((option) => option.id === selectedValue) || null;
+  const setSelectedValue = (formId, value) => {
+    setFormSelections((prev) => ({
+      ...prev,
+      [formId]: value,
+    }));
+  };
+
+  const getSelectedValue = (formId) => {
+    return formSelections[formId] || "";
+  };
 
   return (
     <DropdownContext.Provider
       value={{
-        selectedValue,
         setSelectedValue,
+        getSelectedValue,
         dropDownOptions,
-        selectedOption,
       }}
     >
       {children}
