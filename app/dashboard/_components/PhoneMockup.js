@@ -1,7 +1,14 @@
-import Image from "next/image";
+"use client";
 
-export default function PhoneMockup() {
-  const items = ["1", "2", "2", "2", "2", "2", "2", "2", "2"];
+import Image from "next/image";
+import { useDropdown } from "../context/DropdownContext";
+
+export default function PhoneMockup({ forms }) {
+  const { getAllSelections } = useDropdown();
+
+  const formIds = forms.map((form) => form.id);
+
+  const selections = getAllSelections(formIds);
 
   return (
     <div
@@ -29,12 +36,45 @@ export default function PhoneMockup() {
           />
 
           <ul className="mt-[36px]">
-            {items.map((item, index) => (
-              <li
-                key={index}
-                className="mt-5 w-full h-[44px] rounded-lg bg-custom-grey-100"
-              ></li>
-            ))}
+            {selections.length === 0
+              ? Array(5)
+                  .fill(null)
+                  .map((_, index) => (
+                    <li
+                      key={index}
+                      className="mt-5 w-full h-[44px] rounded-lg bg-custom-grey-100"
+                    ></li>
+                  ))
+              : selections.map((selection) => (
+                  <li
+                    key={selection.formId}
+                    style={{ backgroundColor: selection.color }}
+                    className="mt-5 w-full h-[44px] rounded-lg flex items-center justify-between px-4 text-white"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={`/images/${selection.fileName}`}
+                        width={16}
+                        height={16}
+                        alt={selection.alt}
+                        className="brightness-0 invert"
+                      />
+                      <span className="instrument-sans text-xs font-normal text-white">
+                        {selection.text}
+                      </span>
+                    </div>
+
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M2.66669 8H13.3334M13.3334 8L8.00002 2.66667M13.3334 8L8.00002 13.3333"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </li>
+                ))}
           </ul>
         </div>
       </div>

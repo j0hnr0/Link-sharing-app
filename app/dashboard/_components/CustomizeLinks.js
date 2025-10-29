@@ -1,22 +1,7 @@
-"use client";
-
-import { useState } from "react";
 import LinkFormContainer from "./LinkFormContainer";
 import EmptyLinkContainer from "./EmptyLinkContainer";
 
-export default function CustomizeLinks() {
-  const [forms, setForms] = useState([]);
-  const [nextId, setNextId] = useState(1);
-
-  function addForm() {
-    setForms([...forms, { id: nextId }]);
-    setNextId(nextId + 1);
-  }
-
-  function removeForm(idToRemove) {
-    setForms(forms.filter((form) => form.id !== idToRemove));
-  }
-
+export default function CustomizeLinks({ forms, addForm, removeForm }) {
   return (
     <div
       className="w-[60%]
