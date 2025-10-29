@@ -22,11 +22,13 @@ export default function Header() {
       max-custom-md:gap-0"
       >
         <NavButton
+          href="/dashboard/links"
           imgSrc="/images/icon-links-header.svg"
           imgAlt="Links button icon"
           text="Links"
         />
         <NavButton
+          href="/dashboard/profile"
           imgSrc="/images/icon-profile-details-header.svg"
           imgAlt="Profile details button icon"
           text="Profile Details"

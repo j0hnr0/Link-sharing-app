@@ -6,6 +6,8 @@ const DropdownContext = createContext();
 
 export function DropdownProvider({ children }) {
   const [formSelections, setFormSelections] = useState({});
+  const [forms, setForms] = useState([]);
+  const [nextId, setNextId] = useState(1);
 
   const dropDownOptions = [
     {
@@ -108,6 +110,15 @@ export function DropdownProvider({ children }) {
     },
   ];
 
+  const addForm = () => {
+    setForms([...forms, { id: nextId }]);
+    setNextId(nextId + 1);
+  };
+
+  const removeForm = (idToRemove) => {
+    setForms(forms.filter((form) => form.id !== idToRemove));
+  };
+
   const setSelectedValue = (formId, value) => {
     setFormSelections((prev) => ({
       ...prev,
@@ -141,6 +152,9 @@ export function DropdownProvider({ children }) {
         getSelectedValue,
         dropDownOptions,
         getAllSelections,
+        forms,
+        addForm,
+        removeForm,
       }}
     >
       {children}

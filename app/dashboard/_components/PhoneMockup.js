@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import { useDropdown } from "../context/DropdownContext";
+import { useDropdown } from "../_context/DropdownContext";
 
-export default function PhoneMockup({ forms }) {
-  const { getAllSelections } = useDropdown();
+export default function PhoneMockup() {
+  const { getAllSelections, forms } = useDropdown();
 
   const formIds = forms.map((form) => form.id);
 
