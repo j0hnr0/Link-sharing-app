@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 export default function Profile() {
   return (
     <div
@@ -17,11 +19,30 @@ export default function Profile() {
         <p className="mt-2 instrument-sans font-normal text-base text-custom-grey-500">
           Add your details to create a personal touch to your profile.
         </p>
-      </div>
 
-      {/* No responsive yet */}
-        
-      {/* No responsive yet */}
+        {/* No responsive yet */}
+        <div className="mt-10 w-full p-6 bg-custom-grey-50 rounded-[12px]">
+          <div className="flex justify-between items-center">
+            <p className="instrument-sans font-normal text-base text-custom-grey-500">
+              Profile picture
+            </p>
+
+            <div className="w-full max-w-48 bg-custom-grey-100 py-[60px]">
+              <Image
+                src="/images/icon-upload-image.svg"
+                className="mx-auto"
+                width={40}
+                height={40}
+                alt="Upload Image Icon"
+              />
+              <p className="mt-2 text-center instrument-sans font-semibold text-base text-custom-purple-600">
+                + Upload Image
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* No responsive yet */}
+      </div>
 
       <div
         className="bg-white rounded-b-xl py-6 px-10 border-t border-custom-grey-200
