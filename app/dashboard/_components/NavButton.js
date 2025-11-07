@@ -1,14 +1,26 @@
-import Image from "next/image";
+import clsx from "clsx";
 import Link from "next/link";
 
-export default function NavButton({ href, imgSrc, imgAlt, text }) {
+export default function NavButton({ href, Icon, text, isActive }) {
   return (
     <Link
       href={href}
-      className="py-4 px-6 rounded-lg bg-custom-grey-100 flex justify-center items-center gap-2 cursor-pointer"
+      className={clsx(
+        "py-4 px-6 rounded-lg flex justify-center items-center gap-2 cursor-pointer",
+        isActive ? "bg-custom-grey-100" : "bg-transparent"
+      )}
     >
-      <Image src={imgSrc} width={20} height={20} alt={imgAlt} />
-      <span className="max-custom-semism:hidden block instrument-sans font-semibold text-base text-custom-purple-600">
+      <Icon
+        className={clsx(
+          isActive ? "text-custom-purple-600" : "text-custom-grey-500"
+        )}
+      />
+      <span
+        className={clsx(
+          "max-custom-semism:hidden block instrument-sans font-semibold text-base",
+          isActive ? "text-custom-purple-600" : "text-custom-grey-500"
+        )}
+      >
         {text}
       </span>
     </Link>

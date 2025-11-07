@@ -1,8 +1,15 @@
+"use client";
+
 import Logo from "@/_components/Logo";
 import Image from "next/image";
 import NavButton from "./NavButton";
+import { usePathname } from "next/navigation";
+import IconLinksHeader from "../_svg-components/IconLinksHeader";
+import IconProfileDetailsHeader from "../_svg-components/IconProfileDetailsHeader";
 
 export default function Header() {
+  const pathname = usePathname();
+
   return (
     <header className="p-4 bg-white flex justify-between items-center rounded-xl">
       {/* Desktop Logo */}
@@ -23,15 +30,15 @@ export default function Header() {
       >
         <NavButton
           href="/dashboard/links"
-          imgSrc="/images/icon-links-header.svg"
-          imgAlt="Links button icon"
+          Icon={IconLinksHeader}
           text="Links"
+          isActive={pathname === "/dashboard/links"}
         />
         <NavButton
           href="/dashboard/profile"
-          imgSrc="/images/icon-profile-details-header.svg"
-          imgAlt="Profile details button icon"
+          Icon={IconProfileDetailsHeader}
           text="Profile Details"
+          isActive={pathname === "/dashboard/profile"}
         />
       </div>
 
