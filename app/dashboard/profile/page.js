@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Input from "./_components/Input";
 
 export default function Profile() {
   return (
@@ -49,57 +50,30 @@ export default function Profile() {
 
         <div className="mt-6 w-full p-6 bg-custom-grey-50 rounded-[12px]">
           <div className="flex justify-between items-center">
-            <label
-              htmlFor="first-name"
-              className="instrument-sans font-normal text-base text-custom-grey-500"
-            >
-              First name*
-            </label>
-            <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white">
-              <input
-                type="text"
-                name="first-name"
-                id="first-name"
-                className="w-full h-full bg-transparent focus:outline-none instrument-sans font-normal text-base"
-                placeholder="e.g. John"
-              />
-            </div>
+            <Input
+              label="First name*"
+              type="text"
+              name="first-name"
+              placeholder="e.g. John"
+            />
           </div>
 
           <div className="mt-4 flex justify-between items-center">
-            <label
-              htmlFor="last-name"
-              className="instrument-sans font-normal text-base text-custom-grey-500"
-            >
-              Last name*
-            </label>
-            <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white">
-              <input
-                type="text"
-                name="last-name"
-                id="last-name"
-                className="w-full h-full bg-transparent focus:outline-none instrument-sans font-normal text-base"
-                placeholder="e.g. Appleseed"
-              />
-            </div>
+            <Input
+              label="Last name*"
+              type="text"
+              name="last-name"
+              placeholder="e.g. Appleseed"
+            />
           </div>
 
           <div className="mt-4 flex justify-between items-center">
-            <label
-              htmlFor="email"
-              className="instrument-sans font-normal text-base text-custom-grey-500"
-            >
-              Email
-            </label>
-            <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white">
-              <input
-                type="email"
-                name="email"
-                id="email"
-                className="w-full h-full bg-transparent focus:outline-none instrument-sans font-normal text-base"
-                placeholder="e.g. email@example.com"
-              />
-            </div>
+            <Input
+              label="Email"
+              type="email"
+              name="email"
+              placeholder="e.g. email@example.com"
+            />
           </div>
         </div>
         {/* No responsive yet */}
