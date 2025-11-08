@@ -23,7 +23,8 @@ export default function Profile() {
 
         {/* No responsive yet */}
         <div className="mt-10 w-full p-6 bg-custom-grey-50 rounded-[12px]">
-          <div className="flex justify-between items-center">
+          <div className="flex justify-between items-center
+          max-custom-lg:gap-2.5">
             <p className="instrument-sans font-normal text-base text-custom-grey-500">
               Profile picture
             </p>

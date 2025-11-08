@@ -7,7 +7,8 @@ export default function Input({ label, type, name, placeholder }) {
       >
         {label}
       </label>
-      <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white">
+      <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white
+      max-custom-lg:max-w-[250px]">
         <input
           type={type}
           name={name}
