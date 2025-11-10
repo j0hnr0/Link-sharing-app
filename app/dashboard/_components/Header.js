@@ -44,7 +44,7 @@ export default function Header() {
       </div>
 
       <Link
-        href="/preview"
+        href="/dashboard/preview"
         className="py-4 px-6 rounded-lg flex justify-center items-center cursor-pointer border border-custom-purple-600
         max-custom-semism:p-4 "
       >
