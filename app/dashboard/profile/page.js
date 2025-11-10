@@ -21,15 +21,21 @@ export default function Profile() {
           Add your details to create a personal touch to your profile.
         </p>
 
-        {/* No responsive yet */}
         <div className="mt-10 w-full p-6 bg-custom-grey-50 rounded-[12px]">
-          <div className="flex justify-between items-center
-          max-custom-lg:gap-2.5">
+          <div
+            className="flex justify-between items-center
+          max-custom-lg:gap-2.5
+          max-custom-md:gap-0
+          max-custom-semism:flex-col max-custom-semism:justify-start max-custom-semism:items-start"
+          >
             <p className="instrument-sans font-normal text-base text-custom-grey-500">
               Profile picture
             </p>
 
-            <div className="w-full max-w-48 bg-custom-grey-100 py-[60px]">
+            <div
+              className="w-full max-w-48 bg-custom-grey-100 py-[60px]
+            max-custom-semism:py-[39px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
+            >
               <Image
                 src="/images/icon-upload-image.svg"
                 className="mx-auto"
@@ -42,7 +48,10 @@ export default function Profile() {
               </p>
             </div>
 
-            <p className="instrument-sans font-normal text-xs text-custom-grey-500">
+            <p
+              className="instrument-sans font-normal text-xs text-custom-grey-500
+            max-custom-semism:mt-6"
+            >
               Image must be below 1024x1024px <br />
               Use PNG or JPG format.
             </p>
@@ -50,7 +59,10 @@ export default function Profile() {
         </div>
 
         <div className="mt-6 w-full p-6 bg-custom-grey-50 rounded-[12px]">
-          <div className="flex justify-between items-center">
+          <div
+            className="flex justify-between items-center
+          max-custom-semism:flex-col max-custom-semism:justify-center max-custom-semism:items-start max-custom-semism:gap-2"
+          >
             <Input
               label="First name*"
               type="text"
@@ -59,7 +71,8 @@ export default function Profile() {
             />
           </div>
 
-          <div className="mt-4 flex justify-between items-center">
+          <div className="mt-4 flex justify-between items-center
+          max-custom-semism:mt-2 max-custom-semism:flex-col max-custom-semism:justify-center max-custom-semism:items-start max-custom-semism:gap-2">
             <Input
               label="Last name*"
               type="text"
@@ -68,7 +81,8 @@ export default function Profile() {
             />
           </div>
 
-          <div className="mt-4 flex justify-between items-center">
+          <div className="mt-4 flex justify-between items-center
+          max-custom-semism:mt-2 max-custom-semism:flex-col max-custom-semism:justify-center max-custom-semism:items-start max-custom-semism:gap-2">
             <Input
               label="Email"
               type="email"
@@ -77,7 +91,6 @@ export default function Profile() {
             />
           </div>
         </div>
-        {/* No responsive yet */}
       </div>
 
       <div
