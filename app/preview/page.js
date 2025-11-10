@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 
 export default function Preview() {
@@ -26,8 +27,25 @@ export default function Preview() {
         </button>
       </header>
 
-      <div className="mt-[112px] w-full max-w-[349px] mx-auto py-12 px-14 bg-white rounded-3xl">
+      <div className="mt-[112px] w-full max-w-[349px] mx-auto py-12 px-14 bg-white rounded-3xl shadow-2xl">
+        <div className="w-[104px] h-[104px] mx-auto rounded-full border-4 border-custom-purple-600">
+          <Image
+            src="/images/thorfinn.webp"
+            className="w-full h-full rounded-full"
+            width={104}
+            height={104}
+            alt="User's profile picture"
+          />
+        </div>
 
+        <div className="mt-6 text-center">
+          <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900">
+            Thorfinn
+          </h1>
+          <p className="mt-2 instrument-sans font-normal text-base text-custom-grey-500">
+            thorfinn@example.com
+          </p>
+        </div>
       </div>
     </main>
     // No responsive yet
