@@ -8,7 +8,7 @@ export default function Preview() {
 
       <header className="w-full p-4 rounded-[12px] bg-white flex justify-between">
         <Link
-          href="/dashboard"
+          href="/dashboard/links"
           className="w-full max-w-[153px] bg-transparent py-4 rounded-[8px] border border-custom-purple-600 text-center"
         >
           <p className="instrument-sans font-semibold text-base text-custom-purple-600">
