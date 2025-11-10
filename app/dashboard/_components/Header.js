@@ -6,6 +6,7 @@ import NavButton from "./NavButton";
 import { usePathname } from "next/navigation";
 import IconLinksHeader from "../_svg-components/IconLinksHeader";
 import IconProfileDetailsHeader from "../_svg-components/IconProfileDetailsHeader";
+import Link from "next/link";
 
 export default function Header() {
   const pathname = usePathname();
@@ -42,8 +43,8 @@ export default function Header() {
         />
       </div>
 
-      <button
-        type="button"
+      <Link
+        href="/preview"
         className="py-4 px-6 rounded-lg flex justify-center items-center cursor-pointer border border-custom-purple-600
         max-custom-semism:p-4 "
       >
@@ -58,7 +59,7 @@ export default function Header() {
         <span className="max-custom-semism:hidden block instrument-sans font-semibold text-base text-custom-purple-600">
           Preview
         </span>
-      </button>
+      </Link>
     </header>
   );
 }
