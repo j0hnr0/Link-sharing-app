@@ -12,14 +12,20 @@ export default function Preview() {
   const selections = getAllSelections(formIds);
 
   return (
-    // No responsive yet
     <main className="p-6">
-      <div className="absolute -z-50 top-0 left-0 right-0 w-full h-[357px] rounded-b-4xl bg-custom-purple-600"></div>
+      <div
+        className="absolute -z-50 top-0 left-0 right-0 w-full h-[357px] rounded-b-4xl bg-custom-purple-600
+      max-custom-semism:hidden"
+      ></div>
 
-      <header className="w-full p-4 rounded-[12px] bg-white flex justify-between">
+      <header
+        className="w-full p-4 rounded-[12px] bg-white flex justify-between
+      max-custom-sm:px-0 max-custom-sm:gap-4"
+      >
         <Link
           href="/dashboard/links"
-          className="w-full max-w-[153px] bg-transparent py-4 rounded-[8px] border border-custom-purple-600 text-center"
+          className="w-full max-w-[153px] bg-transparent py-4 rounded-[8px] border border-custom-purple-600 text-center
+          max-custom-sm:max-w-none"
         >
           <p className="instrument-sans font-semibold text-base text-custom-purple-600">
             Back to Editor
@@ -28,7 +34,8 @@ export default function Preview() {
 
         <button
           type="button"
-          className="w-full max-w-[127px] bg-custom-purple-600 rounded-[8px] py-4 text-center"
+          className="w-full max-w-[127px] bg-custom-purple-600 rounded-[8px] py-4 text-center
+          max-custom-sm:max-w-none"
         >
           <p className="instrument-sans font-semibold text-base text-white">
             Share Link
@@ -36,7 +43,10 @@ export default function Preview() {
         </button>
       </header>
 
-      <div className="mt-[112px] w-full max-w-[349px] mx-auto py-12 px-14 bg-white rounded-3xl shadow-2xl">
+      <div
+        className="mt-[112px] w-full max-w-[349px] mx-auto py-12 px-14 bg-white rounded-3xl shadow-2xl
+      max-custom-semism:mt-[50px] max-custom-semism:shadow-none max-custom-semism:py-0"
+      >
         <div className="w-[104px] h-[104px] mx-auto rounded-full border-4 border-custom-purple-600">
           <Image
             src="/images/thorfinn.webp"
@@ -99,6 +109,5 @@ export default function Preview() {
         </ul>
       </div>
     </main>
-    // No responsive yet
   );
 }
