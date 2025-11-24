@@ -8,7 +8,7 @@ export default function Input({ label, type, name, placeholder }) {
       >
         {label}
       </label>
-      <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white
+      <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white focus-within:border-custom-purple-600 focus-within:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]
       max-custom-lg:max-w-[250px]
       max-custom-md:max-w-[424px]">
         <input

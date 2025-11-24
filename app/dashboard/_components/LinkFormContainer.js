@@ -41,8 +41,15 @@ export default function LinkFormContainer({ formId, removeForm }) {
         <small className="instrument-sans font-normal text-xs text-custom-grey-900">
           Platform
         </small>
-        <Select value={selectedValue || "frontendmentor"} onValueChange={(value) => setSelectedValue(formId, value)}>
-          <SelectTrigger className="mt-2 w-full !h-auto rounded-lg border border-custom-grey-200 bg-white p-4">
+        <Select
+          value={selectedValue || "frontendmentor"}
+          onValueChange={(value) => setSelectedValue(formId, value)}
+        >
+          <SelectTrigger
+            className="mt-2 w-full !h-auto rounded-lg border border-custom-grey-200 bg-white p-4
+            data-[state=open]:border-custom-purple-600 
+              data-[state=open]:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]"
+          >
             <SelectValue
               className="instrument-sans font-normal text-base text-custom-grey-900"
               placeholder="Select Link"
@@ -73,7 +80,11 @@ export default function LinkFormContainer({ formId, removeForm }) {
         <small className="instrument-sans font-normal text-xs text-custom-grey-900">
           Link
         </small>
-        <div className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 flex justify-start items-center gap-4">
+        <div
+          className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 flex justify-start items-center gap-4
+        focus-within:border-custom-purple-600 
+        focus-within:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]"
+        >
           <Image
             src="/images/icon-link.svg"
             width={16}

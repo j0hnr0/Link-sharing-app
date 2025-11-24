@@ -25,7 +25,7 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
         <button
           type="button"
           onClick={addForm}
-          className="mt-10 w-full rounded-lg border border-custom-purple-600 py-4 text-center cursor-pointer"
+          className="mt-10 w-full rounded-lg border border-custom-purple-600 py-4 text-center cursor-pointer active:bg-custom-grey-100"
         >
           <span className="instrument-sans font-semibold text-base text-custom-purple-600">
             + Add new link

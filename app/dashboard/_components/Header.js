@@ -45,7 +45,7 @@ export default function Header() {
 
       <Link
         href="/dashboard/preview"
-        className="py-4 px-6 rounded-lg flex justify-center items-center cursor-pointer border border-custom-purple-600
+        className="py-4 px-6 rounded-lg flex justify-center items-center cursor-pointer border border-custom-purple-600 active:bg-custom-grey-100
         max-custom-semism:p-4 "
       >
         {/* Mobile Logo */}

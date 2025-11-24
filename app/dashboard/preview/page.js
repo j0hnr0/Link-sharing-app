@@ -24,7 +24,7 @@ export default function Preview() {
       >
         <Link
           href="/dashboard/links"
-          className="w-full max-w-[153px] bg-transparent py-4 rounded-[8px] border border-custom-purple-600 text-center
+          className="w-full max-w-[153px] bg-transparent py-4 rounded-[8px] border border-custom-purple-600 text-center active:bg-custom-grey-100
           max-custom-sm:max-w-none"
         >
           <p className="instrument-sans font-semibold text-base text-custom-purple-600">
