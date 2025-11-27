@@ -2,6 +2,7 @@ import "./globals.css";
 import localFont from "next/font/local";
 import { SessionProviders } from "./providers/session-provider";
 import { AuthProvider } from "./contexts/auth-provider";
+import TanstackProvider from "./providers/tanstack-provider";
 
 export const metadata = {
   title: "Link Sharing App",
@@ -34,9 +35,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body className={`${instrumentSans.variable} antialiased`}>
-        <SessionProviders>
-          <AuthProvider>{children}</AuthProvider>
-        </SessionProviders>
+        <TanstackProvider>
+          <SessionProviders>
+            <AuthProvider>{children}</AuthProvider>
+          </SessionProviders>
+        </TanstackProvider>
       </body>
     </html>
   );

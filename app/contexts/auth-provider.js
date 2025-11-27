@@ -38,25 +38,21 @@ export function AuthProvider({ children }) {
   };
 
   const register = async (userData) => {
-    try {
-      const response = await fetch("/api/auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userData),
-      });
+    const response = await fetch("/api/auth/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
 
-      const data = await response.json();
+    const data = await response.json();
 
-      if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
-      }
-
-      return { success: true, data };
-    } catch (error) {
-      return { success: false, error: error.message };
+    if (!response.ok) {
+      throw new Error(data.message || "Registration failed");
     }
+
+    return data;
   };
 
   const logout = async () => {
