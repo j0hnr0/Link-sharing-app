@@ -19,18 +19,13 @@ export default function CreateForm() {
   } = useForm();
 
   const router = useRouter();
-  const { register, login } = useAuth();
+  const { register } = useAuth();
   const password = watch("password", "");
 
   const registerMutation = useMutation({
     mutationFn: (userData) => register(userData),
-    onSuccess: async (data, variables) => {
-      try {
-        await login(variables.email, variables.password);
-        router.push("/dashboard");
-      } catch (error) {
-        router.push("/");
-      }
+    onSuccess: async () => {
+      router.push("/");
     },
   });
 
