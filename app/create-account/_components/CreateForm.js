@@ -25,7 +25,7 @@ export default function CreateForm() {
   const registerMutation = useMutation({
     mutationFn: (userData) => register(userData),
     onSuccess: async () => {
-      router.push("/");
+      router.push("/?registered=true");
     },
   });
 
