@@ -24,17 +24,17 @@ export function AuthProvider({ children }) {
   }, [status, session]);
 
   const login = async (email, password) => {
-    try {
-      const result = await signIn("credentials", {
-        redirect: false,
-        email,
-        password,
-      });
+    const result = await signIn("credentials", {
+      redirect: false,
+      email,
+      password,
+    });
 
-      return { success: !result.error, error: result.error };
-    } catch (error) {
-      return { success: false, error: error.message };
+    if (result?.error) {
+      throw new Error(result.error);
     }
+
+    return result;
   };
 
   const register = async (userData) => {

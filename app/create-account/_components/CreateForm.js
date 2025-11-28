@@ -6,19 +6,39 @@ import InputContainer from "@/_components/InputContainer";
 import InputErrorMessage from "@/_components/InputErrorMessage";
 import Label from "@/_components/Label";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/contexts/auth-provider";
+import { useMutation } from "@tanstack/react-query";
 
 export default function CreateForm() {
   const {
-    register,
+    register: registerField,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm();
 
+  const router = useRouter();
+  const { register, login } = useAuth();
   const password = watch("password", "");
 
-  function handleCreateForm() {
-    console.log("create");
+  const registerMutation = useMutation({
+    mutationFn: (userData) => register(userData),
+    onSuccess: async (data, variables) => {
+      try {
+        await login(variables.email, variables.password);
+        router.push("/dashboard");
+      } catch (error) {
+        router.push("/");
+      }
+    },
+  });
+
+  function handleCreateForm(data) {
+    registerMutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
   }
 
   return (
@@ -32,6 +52,15 @@ export default function CreateForm() {
       <p className="instrument-sans font-normal text-base text-custom-grey-500">
         Let&apos;s get you started sharing your links!
       </p>
+
+      {registerMutation.isError && (
+        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-sm text-red-600">
+            {registerMutation.error?.message ||
+              "Registration failed. Please try again."}
+          </p>
+        </div>
+      )}
 
       <div className="mt-10">
         <Label htmlFor="email" error={errors.email?.message}>
@@ -52,7 +81,7 @@ export default function CreateForm() {
             name="email"
             type="email"
             placeholder="e.g. alex@email.com"
-            {...register("email", {
+            {...registerField("email", {
               required: "Can't be empty",
               pattern: {
                 value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
@@ -87,7 +116,7 @@ export default function CreateForm() {
             name="password"
             type="password"
             placeholder="At least 8 characters"
-            {...register("password", {
+            {...registerField("password", {
               required: "Password is required",
               minLength: {
                 value: 8,
@@ -132,7 +161,7 @@ export default function CreateForm() {
             name="new-password"
             type="password"
             placeholder="At least 8 characters"
-            {...register("confirmPassword", {
+            {...registerField("confirmPassword", {
               required: "Please confirm your password",
               validate: (value) =>
                 value === password || "The passwords do not match",
@@ -148,7 +177,11 @@ export default function CreateForm() {
         </p>
       </div>
 
-      <Button>Create new account</Button>
+      <Button disabled={registerMutation.isPending}>
+        {registerMutation.isPending
+          ? "Creating account..."
+          : "Create new account"}
+      </Button>
     </form>
   );
 }
