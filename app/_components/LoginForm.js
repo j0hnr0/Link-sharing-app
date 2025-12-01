@@ -5,7 +5,10 @@ import Input from "@/_components/Input";
 import InputContainer from "@/_components/InputContainer";
 import InputErrorMessage from "@/_components/InputErrorMessage";
 import Label from "@/_components/Label";
+import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import { useAuth } from "../contexts/auth-provider";
+import { useMutation } from "@tanstack/react-query";
 
 export default function LoginForm() {
   const {
@@ -14,8 +17,21 @@ export default function LoginForm() {
     formState: { errors },
   } = useForm();
 
-  function handleLoginForm() {
-    console.log("login");
+  const router = useRouter();
+  const { login } = useAuth();
+
+  const loginMutation = useMutation({
+    mutationFn: ({ email, password }) => login(email, password),
+    onSuccess: () => {
+      router.push("/dashboard");
+    },
+  });
+
+  function handleLoginForm(data) {
+    loginMutation.mutate({
+      email: data.email,
+      password: data.password,
+    });
   }
 
   return (
@@ -29,6 +45,12 @@ export default function LoginForm() {
       <p className="instrument-sans font-normal text-base text-custom-grey-500">
         Add your details below to get back into the app
       </p>
+
+      {loginMutation.isError && (
+        <div className="mt-4 p-3 bg-red-50 border border-red-200 rounded-lg">
+          <p className="text-sm text-red-600">Invalid email or password</p>
+        </div>
+      )}
 
       <div className="mt-10">
         <Label htmlFor="email" error={errors.email?.message}>
@@ -96,7 +118,9 @@ export default function LoginForm() {
         <InputErrorMessage error={errors.password?.message} />
       </div>
 
-      <Button>Login</Button>
+      <Button disabled={loginMutation.isPending}>
+        {loginMutation.isPending ? "Logging in..." : "Login"}
+      </Button>
     </form>
   );
 }
