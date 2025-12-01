@@ -3,13 +3,16 @@
 import Link from "next/link";
 import FormBackground from "@/_components/FormBackground";
 import LoginForm from "./_components/LoginForm";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
+import { useAuth } from "./contexts/auth-provider";
 
 export default function Home() {
   const searchParams = useSearchParams();
   const hasShownToast = useRef(false);
+  const { isAuthenticated, loading } = useAuth();
+  const router = useRouter();
 
   useEffect(() => {
     if (searchParams.get("registered") === "true" && !hasShownToast.current) {
@@ -17,6 +20,22 @@ export default function Home() {
       toast.success("Account created successfully! Please login.");
     }
   }, [searchParams]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push("/dashboard");
+    }
+  }, [isAuthenticated, router]);
+
+  if (loading || isAuthenticated) {
+    return (
+      <div className="flex items-center justify-center min-h-screen gap-2">
+        <div className="w-3 h-3 bg-custom-purple-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
+        <div className="w-3 h-3 bg-custom-purple-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
+        <div className="w-3 h-3 bg-custom-purple-600 rounded-full animate-bounce"></div>
+      </div>
+    );
+  }
 
   return (
     <FormBackground>
