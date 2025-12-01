@@ -9,6 +9,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/auth-provider";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function CreateForm() {
   const {
@@ -20,11 +21,13 @@ export default function CreateForm() {
 
   const router = useRouter();
   const { register } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
   const password = watch("password", "");
 
   const registerMutation = useMutation({
     mutationFn: (userData) => register(userData),
     onSuccess: async () => {
+      setIsLoading(true);
       router.push("/?registered=true");
     },
   });
@@ -172,8 +175,8 @@ export default function CreateForm() {
         </p>
       </div>
 
-      <Button disabled={registerMutation.isPending}>
-        {registerMutation.isPending
+      <Button disabled={registerMutation.isPending || isLoading}>
+        {registerMutation.isPending || isLoading
           ? "Creating account..."
           : "Create new account"}
       </Button>

@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { useAuth } from "../contexts/auth-provider";
 import { useMutation } from "@tanstack/react-query";
+import { useState } from "react";
 
 export default function LoginForm() {
   const {
@@ -19,10 +20,12 @@ export default function LoginForm() {
 
   const router = useRouter();
   const { login } = useAuth();
+  const [isLoading, setIsLoading] = useState(false);
 
   const loginMutation = useMutation({
     mutationFn: ({ email, password }) => login(email, password),
     onSuccess: () => {
+      setIsLoading(true);
       router.push("/dashboard");
     },
   });
@@ -118,8 +121,8 @@ export default function LoginForm() {
         <InputErrorMessage error={errors.password?.message} />
       </div>
 
-      <Button disabled={loginMutation.isPending}>
-        {loginMutation.isPending ? "Logging in..." : "Login"}
+      <Button disabled={loginMutation.isPending || isLoading}>
+        {loginMutation.isPending || isLoading ? "Logging in..." : "Login"}
       </Button>
     </form>
   );
