@@ -8,6 +8,7 @@ import IconLinksHeader from "../_svg-components/IconLinksHeader";
 import IconProfileDetailsHeader from "../_svg-components/IconProfileDetailsHeader";
 import Link from "next/link";
 import { useAuth } from "@/app/contexts/auth-provider";
+import IconLogoutHeader from "../_svg-components/IconLogoutHeader";
 
 export default function Header() {
   const pathname = usePathname();
@@ -67,16 +68,9 @@ export default function Header() {
         <button
           type="button"
           onClick={logout}
-          className="py-4 px-2.5 rounded-lg flex justify-center items-center cursor-pointer border border-custom-purple-600 active:bg-custom-grey-100
-        max-custom-semism:p-4 "
+          className="py-4 px-2.5 rounded-lg flex justify-center items-center cursor-pointer border border-custom-purple-600 active:bg-custom-grey-100"
         >
-          {/* Mobile Logo */}
-          <Image
-            src="/images/icon-logout.svg"
-            width={20}
-            height={20}
-            alt="Small Logo icon"
-          />
+          <IconLogoutHeader className="text-custom-purple-600" />
         </button>
       </div>
     </header>
