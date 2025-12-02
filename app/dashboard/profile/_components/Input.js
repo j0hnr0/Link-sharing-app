@@ -1,4 +1,14 @@
-export default function Input({ label, type, name, placeholder }) {
+import clsx from "clsx";
+
+export default function Input({
+  label,
+  type,
+  name,
+  placeholder,
+  error,
+  ref,
+  ...props
+}) {
   return (
     <>
       <label
@@ -8,15 +18,26 @@ export default function Input({ label, type, name, placeholder }) {
       >
         {label}
       </label>
-      <div className="w-full max-w-[424px] p-4 rounded-[8px] border border-custom-grey-200 bg-white focus-within:border-custom-purple-600 focus-within:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]
+      <div
+        className={clsx(
+          `w-full max-w-[424px] p-4 rounded-[8px] border bg-white
       max-custom-lg:max-w-[250px]
-      max-custom-md:max-w-[424px]">
+      max-custom-md:max-w-[424px]`,
+          {
+            "border-red-500": error,
+            "border-custom-grey-200 focus-within:border-custom-purple-600 focus-within:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]":
+              !error,
+          }
+        )}
+      >
         <input
           type={type}
           name={name}
           id={name}
-          className="w-full h-full bg-transparent focus:outline-none instrument-sans font-normal text-base"
           placeholder={placeholder}
+          className="w-full h-full bg-transparent focus:outline-none instrument-sans font-normal text-base"
+          ref={ref}
+          {...props}
         />
       </div>
     </>

@@ -1,13 +1,28 @@
+"use client";
+
 import Image from "next/image";
 import Input from "./_components/Input";
 import EditorContainer from "../_components/EditorContainer";
+import { useForm } from "react-hook-form";
 
 export default function Profile() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  function handleForm() {
+    console.log("kiki");
+  }
+
   return (
     <EditorContainer>
-      <div
+      <form
+        onSubmit={handleSubmit(handleForm)}
         className="w-[60%]
           max-custom-md:w-full"
+        noValidate
       >
         <div
           className="bg-white rounded-t-xl p-10
@@ -70,8 +85,20 @@ export default function Profile() {
                 type="text"
                 name="first-name"
                 placeholder="e.g. John"
+                error={errors.firstName?.message}
+                {...register("firstName", {
+                  required: "Can't be empty",
+                })}
               />
             </div>
+
+            {errors.firstName?.message && (
+              <div className="mt-2 flex justify-end">
+                <p className="text-end instrument-sans font-normal text-xs text-red-500">
+                  {errors.firstName.message}
+                </p>
+              </div>
+            )}
 
             <div
               className="mt-4 flex justify-between items-center
@@ -105,7 +132,7 @@ export default function Profile() {
         >
           <div className="flex justify-end">
             <button
-              type="button"
+              type="submit"
               className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 opacity-25 cursor-pointer
                   max-custom-semism:w-full"
             >
@@ -115,7 +142,7 @@ export default function Profile() {
             </button>
           </div>
         </div>
-      </div>
+      </form>
     </EditorContainer>
   );
 }
