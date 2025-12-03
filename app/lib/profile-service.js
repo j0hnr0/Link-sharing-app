@@ -21,8 +21,8 @@ export async function createProfile({
     data: {
       userId,
       profileImage: profileImage || null,
-      firstName: firstName || null,
-      lastName: lastName || null,
+      firstName,
+      lastName,
       email: email || null,
     },
   });

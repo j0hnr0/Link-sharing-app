@@ -109,8 +109,20 @@ export default function Profile() {
                 type="text"
                 name="last-name"
                 placeholder="e.g. Appleseed"
+                error={errors.lastName?.message}
+                {...register("lastName", {
+                  required: "Can't be empty",
+                })}
               />
             </div>
+
+            {errors.lastName?.message && (
+              <div className="mt-2 flex justify-end">
+                <p className="text-end instrument-sans font-normal text-xs text-red-500">
+                  {errors.lastName.message}
+                </p>
+              </div>
+            )}
 
             <div
               className="mt-4 flex justify-between items-center
