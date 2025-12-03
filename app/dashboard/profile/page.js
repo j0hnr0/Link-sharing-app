@@ -4,16 +4,62 @@ import Image from "next/image";
 import Input from "./_components/Input";
 import EditorContainer from "../_components/EditorContainer";
 import { useForm } from "react-hook-form";
+import { useRef } from "react";
+import { useMutation } from "@tanstack/react-query";
 
 export default function Profile() {
+  const fileInputRef = useRef(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  function handleForm() {
-    console.log("kiki");
+  const mutation = useMutation({
+    mutationFn: async (formData) => {
+      const response = await fetch("/api/profile-details/create", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to create profile");
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      // TODO: Show success message, redirect, etc.
+      console.log("Profile created successfully!");
+    },
+  });
+
+  function handleForm(data) {
+    const formData = {
+      firstName: data.firstName,
+      lastName: data.lastName,
+      email: data.email,
+    };
+
+    mutation.mutate(formData);
+  }
+
+  function handleFileClick() {
+    fileInputRef.current?.click();
+  }
+
+  async function handleFileChange(e) {
+    const file = e.target.files?.[0];
+
+    if (!file) return;
+
+    // TODO: Upload file to server
+    console.log("Selected file:", file);
+
+    // You'll add upload logic here next
   }
 
   return (
@@ -49,8 +95,17 @@ export default function Profile() {
                 Profile picture
               </p>
 
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/*"
+                onChange={handleFileChange}
+                className="hidden"
+              />
+
               <div
-                className="w-full max-w-48 bg-custom-grey-100 py-[60px]
+                onClick={handleFileClick}
+                className="w-full max-w-48 bg-custom-grey-100 py-[60px] cursor-pointer
             max-custom-semism:py-[39px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
               >
                 <Image
@@ -133,6 +188,7 @@ export default function Profile() {
                 type="email"
                 name="email"
                 placeholder="e.g. email@example.com"
+                {...register("email")}
               />
             </div>
           </div>
@@ -145,7 +201,7 @@ export default function Profile() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 opacity-25 cursor-pointer
+              className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 cursor-pointer
                   max-custom-semism:w-full"
             >
               <span className="instrument-sans font-semibold text-base text-white">
