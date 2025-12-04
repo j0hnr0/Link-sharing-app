@@ -36,4 +36,6 @@ export async function getProfileInfo({ userId }) {
       userId: userId,
     },
   });
+
+  return profileInfo;
 }
