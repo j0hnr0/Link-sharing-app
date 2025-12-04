@@ -1,14 +1,13 @@
 "use client";
 
-import Image from "next/image";
 import Input from "./_components/Input";
 import EditorContainer from "../_components/EditorContainer";
 import { useForm } from "react-hook-form";
-import { useRef } from "react";
 import { useMutation } from "@tanstack/react-query";
+import clsx from "clsx";
+import ProfileImageUpload from "./_components/ProfileImageUpload";
 
 export default function Profile() {
-  const fileInputRef = useRef(null);
   const {
     register,
     handleSubmit,
@@ -47,21 +46,6 @@ export default function Profile() {
     mutation.mutate(formData);
   }
 
-  function handleFileClick() {
-    fileInputRef.current?.click();
-  }
-
-  async function handleFileChange(e) {
-    const file = e.target.files?.[0];
-
-    if (!file) return;
-
-    // TODO: Upload file to server
-    console.log("Selected file:", file);
-
-    // You'll add upload logic here next
-  }
-
   return (
     <EditorContainer>
       <form
@@ -84,51 +68,7 @@ export default function Profile() {
             Add your details to create a personal touch to your profile.
           </p>
 
-          <div className="mt-10 w-full p-6 bg-custom-grey-50 rounded-[12px]">
-            <div
-              className="flex justify-between items-center
-          max-custom-lg:gap-2.5
-          max-custom-md:gap-0
-          max-custom-semism:flex-col max-custom-semism:justify-start max-custom-semism:items-start"
-            >
-              <p className="instrument-sans font-normal text-base text-custom-grey-500">
-                Profile picture
-              </p>
-
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileChange}
-                className="hidden"
-              />
-
-              <div
-                onClick={handleFileClick}
-                className="w-full max-w-48 bg-custom-grey-100 py-[60px] cursor-pointer
-            max-custom-semism:py-[39px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
-              >
-                <Image
-                  src="/images/icon-upload-image.svg"
-                  className="mx-auto"
-                  width={40}
-                  height={40}
-                  alt="Upload Image Icon"
-                />
-                <p className="mt-2 text-center instrument-sans font-semibold text-base text-custom-purple-600">
-                  + Upload Image
-                </p>
-              </div>
-
-              <p
-                className="instrument-sans font-normal text-xs text-custom-grey-500
-            max-custom-semism:mt-6"
-              >
-                Image must be below 1024x1024px <br />
-                Use PNG or JPG format.
-              </p>
-            </div>
-          </div>
+          <ProfileImageUpload />
 
           <div className="mt-6 w-full p-6 bg-custom-grey-50 rounded-[12px]">
             <div
@@ -188,9 +128,27 @@ export default function Profile() {
                 type="email"
                 name="email"
                 placeholder="e.g. email@example.com"
-                {...register("email")}
+                error={errors.email?.message}
+                {...register("email", {
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: "Please enter a valid email address",
+                  },
+                  maxLength: {
+                    value: 100,
+                    message: "Please enter a valid email address",
+                  },
+                })}
               />
             </div>
+
+            {errors.email?.message && (
+              <div className="mt-2 flex justify-end">
+                <p className="text-end instrument-sans font-normal text-xs text-red-500">
+                  {errors.email.message}
+                </p>
+              </div>
+            )}
           </div>
         </div>
 
@@ -201,11 +159,18 @@ export default function Profile() {
           <div className="flex justify-end">
             <button
               type="submit"
-              className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 cursor-pointer
-                  max-custom-semism:w-full"
+              disabled={mutation.isPending}
+              className={clsx(
+                "w-[85px] rounded-lg py-4 text-center max-custom-semism:w-full",
+                {
+                  "bg-custom-purple-600 cursor-pointer": !mutation.isPending,
+                  "bg-custom-purple-300 cursor-not-allowed shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]":
+                    mutation.isPending,
+                }
+              )}
             >
               <span className="instrument-sans font-semibold text-base text-white">
-                Save
+                {mutation.isPending ? "Saving..." : "Save"}
               </span>
             </button>
           </div>

@@ -29,3 +29,11 @@ export async function createProfile({
 
   return profile;
 }
+
+export async function getProfileInfo({ userId }) {
+  const profileInfo = await prisma.card.findUnique({
+    where: {
+      userId: userId,
+    },
+  });
+}
