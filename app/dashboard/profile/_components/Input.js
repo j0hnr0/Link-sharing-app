@@ -6,6 +6,7 @@ export default function Input({
   name,
   placeholder,
   error,
+  defaultValue,
   ref,
   ...props
 }) {
@@ -35,6 +36,7 @@ export default function Input({
           name={name}
           id={name}
           placeholder={placeholder}
+          defaultValue={defaultValue || ""}
           className="w-full h-full bg-transparent focus:outline-none instrument-sans font-normal text-base"
           ref={ref}
           {...props}
