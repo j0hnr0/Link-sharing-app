@@ -1,6 +1,5 @@
 "use client";
 
-import Input from "./_components/Input";
 import EditorContainer from "../_components/EditorContainer";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -17,7 +16,7 @@ export default function Profile() {
 
   const mutation = useMutation({
     mutationFn: async (formData) => {
-      const response = await fetch("/api/profile-details/create", {
+      const response = await fetch("/api/profile-details/upsert", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),

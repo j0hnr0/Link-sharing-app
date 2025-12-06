@@ -17,13 +17,19 @@ export async function createProfile({
     throw new Error("User not found");
   }
 
-  const profile = await prisma.card.create({
-    data: {
+  const profileData = {
+    profileImage: profileImage || null,
+    firstName,
+    lastName,
+    email: email || null,
+  };
+
+  const profile = await prisma.card.upsert({
+    where: { userId },
+    update: profileData,
+    create: {
       userId,
-      profileImage: profileImage || null,
-      firstName,
-      lastName,
-      email: email || null,
+      ...profileData,
     },
   });
 
