@@ -6,6 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import clsx from "clsx";
 import ProfileImageUpload from "./_components/ProfileImageUpload";
 import ProfileInformation from "./_components/ProfileInformation";
+import toast from "react-hot-toast";
 
 export default function Profile() {
   const {
@@ -31,8 +32,10 @@ export default function Profile() {
       return data;
     },
     onSuccess: () => {
-      // TODO: Show success message, redirect, etc.
-      console.log("Profile created successfully!");
+      toast.success("Profile saved successfully!");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Something went wrong!");
     },
   });
 
@@ -69,7 +72,7 @@ export default function Profile() {
           </p>
 
           <ProfileImageUpload />
-          <ProfileInformation register={register} errors={errors}/>
+          <ProfileInformation register={register} errors={errors} />
         </div>
 
         <div
