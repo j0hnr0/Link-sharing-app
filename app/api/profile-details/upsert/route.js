@@ -5,7 +5,7 @@ import { createProfile } from "@/app/lib/profile-service";
 
 export async function POST(request) {
   try {
-    const { firstName, lastName, email } = await request.json();
+    const { firstName, lastName, email, profileImage } = await request.json();
 
     const session = await getServerSession(authOptions);
 
@@ -17,7 +17,7 @@ export async function POST(request) {
 
     const profile = await createProfile({
       userId,
-      profileImage: null,
+      profileImage,
       firstName,
       lastName,
       email,

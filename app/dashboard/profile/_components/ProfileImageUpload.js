@@ -1,12 +1,41 @@
 "use client";
 
+import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function ProfileImageUpload() {
+export default function ProfileImageUpload({ onImageUpload }) {
   const fileInputRef = useRef(null);
   const [profileImage, setProfileImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
+
+  const uploadMutation = useMutation({
+    mutationFn: async (file) => {
+      const formData = new FormData();
+      formData.append("image", file);
+
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Upload failed");
+      }
+
+      return data;
+    },
+    onSuccess: (data) => {
+      setProfileImage(data.imageUrl);
+      onImageUpload(data.imageUrl);
+      toast.success("Image uploaded succesfully!");
+    },
+    onError: (error) => {
+      toast.error(error.message || "Failed to upload image");
+    },
+  });
 
   function handleFileClick() {
     fileInputRef.current?.click();
@@ -17,7 +46,7 @@ export default function ProfileImageUpload() {
 
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
+    if (!file.type.startsWith("image/")) {
       alert("Please upload an image file");
       return;
     }
@@ -26,6 +55,8 @@ export default function ProfileImageUpload() {
       alert("Image must be less than 5MB");
       return;
     }
+
+    uploadMutation.mutate(file);
   }
 
   return (
@@ -50,19 +81,29 @@ export default function ProfileImageUpload() {
 
         <div
           onClick={handleFileClick}
-          className="w-full max-w-48 bg-custom-grey-100 py-[60px] cursor-pointer
-                max-custom-semism:py-[39px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
+          className="relative w-full max-w-48 h-48 bg-custom-grey-100 cursor-pointer overflow-hidden
+        max-custom-semism:h-[150px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
         >
-          <Image
-            src="/images/icon-upload-image.svg"
-            className="mx-auto"
-            width={40}
-            height={40}
-            alt="Upload Image Icon"
-          />
-          <p className="mt-2 text-center instrument-sans font-semibold text-base text-custom-purple-600">
-            + Upload Image
-          </p>
+          {profileImage ? (
+            <Image
+              src={profileImage}
+              fill
+              className="object-cover"
+              alt="Profile"
+            />
+          ) : (
+            <div className="flex flex-col items-center justify-center h-full py-[60px] max-custom-semism:py-[39px]">
+              <Image
+                src="/images/icon-upload-image.svg"
+                width={40}
+                height={40}
+                alt="Upload Image Icon"
+              />
+              <p className="mt-2 text-center instrument-sans font-semibold text-base text-custom-purple-600">
+                {uploadMutation.isPending ? "Uploading..." : "+ Upload Image"}
+              </p>
+            </div>
+          )}
         </div>
 
         <p

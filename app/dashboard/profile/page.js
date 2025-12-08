@@ -7,8 +7,11 @@ import clsx from "clsx";
 import ProfileImageUpload from "./_components/ProfileImageUpload";
 import ProfileInformation from "./_components/ProfileInformation";
 import toast from "react-hot-toast";
+import { useState } from "react";
 
 export default function Profile() {
+  const [profileImageUrl, setProfileImageUrl] = useState(null);
+
   const {
     register,
     handleSubmit,
@@ -44,6 +47,7 @@ export default function Profile() {
       firstName: data.firstName,
       lastName: data.lastName,
       email: data.email,
+      profileImage: profileImageUrl,
     };
 
     mutation.mutate(formData);
@@ -71,7 +75,7 @@ export default function Profile() {
             Add your details to create a personal touch to your profile.
           </p>
 
-          <ProfileImageUpload />
+          <ProfileImageUpload onImageUpload={setProfileImageUrl} />
           <ProfileInformation register={register} errors={errors} />
         </div>
 
