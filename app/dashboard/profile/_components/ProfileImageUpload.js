@@ -1,10 +1,12 @@
 "use client";
 
 import Image from "next/image";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export default function ProfileImageUpload() {
   const fileInputRef = useRef(null);
+  const [profileImage, setProfileImage] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   function handleFileClick() {
     fileInputRef.current?.click();
@@ -15,10 +17,15 @@ export default function ProfileImageUpload() {
 
     if (!file) return;
 
-    // TODO: Upload file to server
-    console.log("Selected file:", file);
+    if (!file.type.startsWith('image/')) {
+      alert("Please upload an image file");
+      return;
+    }
 
-    // You'll add upload logic here next
+    if (file.size > 5 * 1024 * 1024) {
+      alert("Image must be less than 5MB");
+      return;
+    }
   }
 
   return (
