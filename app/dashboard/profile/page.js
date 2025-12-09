@@ -16,7 +16,6 @@ export default function Profile() {
     register,
     handleSubmit,
     formState: { errors },
-    setValue,
   } = useForm();
 
   const { data: profileInfo, isPending } = useQuery({
@@ -34,13 +33,10 @@ export default function Profile() {
   });
 
   useEffect(() => {
-    if (profileInfo) {
-      setValue("firstName", profileInfo.firstName || "");
-      setValue("lastName", profileInfo.lastName || "");
-      setValue("email", profileInfo.email || "");
+    if (profileInfo?.profileImage) {
       setProfileImageUrl(profileInfo.profileImage);
     }
-  }, [profileInfo, setValue]);
+  }, [profileInfo]);
 
   const mutation = useMutation({
     mutationFn: async (formData) => {
@@ -106,6 +102,7 @@ export default function Profile() {
           <ProfileInformation
             register={register}
             errors={errors}
+            profileInfo={profileInfo}
             isPending={isPending}
           />
         </div>

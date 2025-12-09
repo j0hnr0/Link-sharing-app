@@ -4,6 +4,7 @@ import ProfileInformationSkeleton from "./ProfileInformationSkeleton";
 export default function ProfileInformation({
   register,
   errors,
+  profileInfo,
   isPending,
 }) {
   if (isPending) {
@@ -22,6 +23,7 @@ export default function ProfileInformation({
           name="first-name"
           placeholder="e.g. John"
           error={errors.firstName?.message}
+          defaultValue={profileInfo?.firstName}
           {...register("firstName", {
             required: "Can't be empty",
           })}
@@ -46,6 +48,7 @@ export default function ProfileInformation({
           name="last-name"
           placeholder="e.g. Appleseed"
           error={errors.lastName?.message}
+          defaultValue={profileInfo?.lastName}
           {...register("lastName", {
             required: "Can't be empty",
           })}
@@ -70,6 +73,7 @@ export default function ProfileInformation({
           name="email"
           placeholder="e.g. email@example.com"
           error={errors.email?.message}
+          defaultValue={profileInfo?.email}
           {...register("email", {
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
