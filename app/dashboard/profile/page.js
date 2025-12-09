@@ -98,6 +98,7 @@ export default function Profile() {
           <ProfileImageUpload
             onImageUpload={setProfileImageUrl}
             initialImage={profileImageUrl}
+            isPending={isPending}
           />
           <ProfileInformation
             register={register}

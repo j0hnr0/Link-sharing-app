@@ -4,8 +4,13 @@ import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
+import ProfileImageSkeleton from "./ProfileImageSkeleton";
 
-export default function ProfileImageUpload({ onImageUpload, initialImage }) {
+export default function ProfileImageUpload({
+  onImageUpload,
+  initialImage,
+  isPending,
+}) {
   const fileInputRef = useRef(null);
   const [profileImage, setProfileImage] = useState(null);
 
@@ -88,9 +93,11 @@ export default function ProfileImageUpload({ onImageUpload, initialImage }) {
         <div
           onClick={handleFileClick}
           className="relative w-full max-w-48 h-48 bg-custom-grey-100 cursor-pointer overflow-hidden
-        max-custom-semism:h-[150px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
+    max-custom-semism:h-[150px] max-custom-semism:max-w-[150px] max-custom-semism:mt-4"
         >
-          {profileImage ? (
+          {isPending ? (
+            <ProfileImageSkeleton />
+          ) : profileImage ? (
             <Image
               src={profileImage}
               fill
