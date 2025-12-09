@@ -64,13 +64,31 @@ export default function Preview() {
       max-custom-semism:mt-[50px] max-custom-semism:shadow-none max-custom-semism:py-0"
       >
         <div className="w-[104px] h-[104px] mx-auto rounded-full border-4 border-custom-purple-600">
-          <Image
-            src="/images/thorfinn.webp"
-            className="w-full h-full rounded-full"
-            width={104}
-            height={104}
-            alt="User's profile picture"
-          />
+          {isPending ? (
+            <div className="w-full h-full rounded-full bg-gray-200 animate-pulse"></div>
+          ) : profileInfo?.profileImage ? (
+            <Image
+              src={profileInfo.profileImage}
+              className="w-full h-full rounded-full"
+              width={104}
+              height={104}
+              alt="User's profile picture"
+            />
+          ) : (
+            <div className="w-full h-full rounded-full bg-gray-300 flex items-center justify-center">
+              <svg
+                className="w-12 h-12 text-gray-400"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+          )}
         </div>
 
         {isPending ? (
@@ -78,10 +96,10 @@ export default function Preview() {
         ) : (
           <div className="mt-6 text-center">
             <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900">
-              {profileInfo?.firstName || ""} {profileInfo?.lastName || ""}
+              {profileInfo?.firstName || "No"} {profileInfo?.lastName || "name"}
             </h1>
             <p className="mt-2 instrument-sans font-normal text-base text-custom-grey-500">
-              {profileInfo?.email || ""}
+              {profileInfo?.email || "No email provided"}
             </p>
           </div>
         )}

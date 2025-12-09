@@ -2,7 +2,7 @@
 
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import toast from "react-hot-toast";
 import ProfileImageSkeleton from "./ProfileImageSkeleton";
 
@@ -12,13 +12,6 @@ export default function ProfileImageUpload({
   isPending,
 }) {
   const fileInputRef = useRef(null);
-  const [profileImage, setProfileImage] = useState(null);
-
-  useEffect(() => {
-    if (initialImage) {
-      setProfileImage(initialImage);
-    }
-  }, [initialImage]);
 
   const uploadMutation = useMutation({
     mutationFn: async (file) => {
@@ -39,7 +32,6 @@ export default function ProfileImageUpload({
       return data;
     },
     onSuccess: (data) => {
-      setProfileImage(data.imageUrl);
       onImageUpload(data.imageUrl);
       toast.success("Image uploaded succesfully!");
     },
@@ -97,9 +89,9 @@ export default function ProfileImageUpload({
         >
           {isPending ? (
             <ProfileImageSkeleton />
-          ) : profileImage ? (
+          ) : initialImage ? (
             <Image
-              src={profileImage}
+              src={initialImage}
               fill
               className="object-cover"
               alt="Profile"
