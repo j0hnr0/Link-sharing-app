@@ -3,6 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useDropdown } from "../_context/DropdownContext";
+import { useQuery } from "@tanstack/react-query";
+import NameSkeleton from "./_components/NameSkeleton";
 
 export default function Preview() {
   const { getAllSelections, forms } = useDropdown();
@@ -10,6 +12,20 @@ export default function Preview() {
   const formIds = forms.map((form) => form.id);
 
   const selections = getAllSelections(formIds);
+
+  const { data: profileInfo, isPending } = useQuery({
+    queryKey: ["profilePreview"],
+    queryFn: async () => {
+      const response = await fetch("/api/profile-details/get");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch the profile info");
+      }
+
+      return data;
+    },
+  });
 
   return (
     <main className="p-6">
@@ -57,14 +73,18 @@ export default function Preview() {
           />
         </div>
 
-        <div className="mt-6 text-center">
-          <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900">
-            Thorfinn
-          </h1>
-          <p className="mt-2 instrument-sans font-normal text-base text-custom-grey-500">
-            thorfinn@example.com
-          </p>
-        </div>
+        {isPending ? (
+          <NameSkeleton />
+        ) : (
+          <div className="mt-6 text-center">
+            <h1 className="instrument-sans font-bold text-[32px] text-custom-grey-900">
+              {profileInfo?.firstName || ""} {profileInfo?.lastName || ""}
+            </h1>
+            <p className="mt-2 instrument-sans font-normal text-base text-custom-grey-500">
+              {profileInfo?.email || ""}
+            </p>
+          </div>
+        )}
 
         <ul className="mt-[32px]">
           {selections.length === 0
