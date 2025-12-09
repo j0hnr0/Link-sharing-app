@@ -2,12 +2,18 @@
 
 import { useMutation } from "@tanstack/react-query";
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
-export default function ProfileImageUpload({ onImageUpload }) {
+export default function ProfileImageUpload({ onImageUpload, initialImage }) {
   const fileInputRef = useRef(null);
   const [profileImage, setProfileImage] = useState(null);
+
+  useEffect(() => {
+    if (initialImage) {
+      setProfileImage(initialImage);
+    }
+  }, [initialImage]);
 
   const uploadMutation = useMutation({
     mutationFn: async (file) => {

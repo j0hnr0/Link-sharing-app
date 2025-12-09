@@ -2,12 +2,12 @@
 
 import EditorContainer from "../_components/EditorContainer";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import clsx from "clsx";
 import ProfileImageUpload from "./_components/ProfileImageUpload";
 import ProfileInformation from "./_components/ProfileInformation";
 import toast from "react-hot-toast";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function Profile() {
   const [profileImageUrl, setProfileImageUrl] = useState(null);
@@ -16,7 +16,31 @@ export default function Profile() {
     register,
     handleSubmit,
     formState: { errors },
+    setValue,
   } = useForm();
+
+  const { data: profileInfo, isPending } = useQuery({
+    queryKey: ["profileInfo"],
+    queryFn: async () => {
+      const response = await fetch("/api/profile-details/get");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch the profile info");
+      }
+
+      return data;
+    },
+  });
+
+  useEffect(() => {
+    if (profileInfo) {
+      setValue("firstName", profileInfo.firstName || "");
+      setValue("lastName", profileInfo.lastName || "");
+      setValue("email", profileInfo.email || "");
+      setProfileImageUrl(profileInfo.profileImage);
+    }
+  }, [profileInfo, setValue]);
 
   const mutation = useMutation({
     mutationFn: async (formData) => {
@@ -75,8 +99,15 @@ export default function Profile() {
             Add your details to create a personal touch to your profile.
           </p>
 
-          <ProfileImageUpload onImageUpload={setProfileImageUrl} />
-          <ProfileInformation register={register} errors={errors} />
+          <ProfileImageUpload
+            onImageUpload={setProfileImageUrl}
+            initialImage={profileImageUrl}
+          />
+          <ProfileInformation
+            register={register}
+            errors={errors}
+            isPending={isPending}
+          />
         </div>
 
         <div

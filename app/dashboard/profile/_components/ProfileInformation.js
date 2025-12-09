@@ -1,28 +1,11 @@
-"use client";
-
-import { useQuery } from "@tanstack/react-query";
 import Input from "./Input";
 import ProfileInformationSkeleton from "./ProfileInformationSkeleton";
 
-export default function ProfileInformation({ register, errors }) {
-  const {
-    data: profileInfo,
-    isPending,
-    error,
-  } = useQuery({
-    queryKey: ["profileInfo"],
-    queryFn: async () => {
-      const response = await fetch("/api/profile-details/get");
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.message || "Failed to fetch the profile info");
-      }
-
-      return data;
-    },
-  });
-
+export default function ProfileInformation({
+  register,
+  errors,
+  isPending,
+}) {
   if (isPending) {
     return <ProfileInformationSkeleton />;
   }
@@ -39,7 +22,6 @@ export default function ProfileInformation({ register, errors }) {
           name="first-name"
           placeholder="e.g. John"
           error={errors.firstName?.message}
-          defaultValue={profileInfo?.firstName}
           {...register("firstName", {
             required: "Can't be empty",
           })}
@@ -64,7 +46,6 @@ export default function ProfileInformation({ register, errors }) {
           name="last-name"
           placeholder="e.g. Appleseed"
           error={errors.lastName?.message}
-          defaultValue={profileInfo?.lastName}
           {...register("lastName", {
             required: "Can't be empty",
           })}
@@ -89,7 +70,6 @@ export default function ProfileInformation({ register, errors }) {
           name="email"
           placeholder="e.g. email@example.com"
           error={errors.email?.message}
-          defaultValue={profileInfo?.email}
           {...register("email", {
             pattern: {
               value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
