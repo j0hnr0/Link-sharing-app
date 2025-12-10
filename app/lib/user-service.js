@@ -16,6 +16,9 @@ export async function createUser({ email, password }) {
     data: {
       email,
       password: hashedPassword,
+      card: {
+        create: {},
+      },
     },
   });
 
