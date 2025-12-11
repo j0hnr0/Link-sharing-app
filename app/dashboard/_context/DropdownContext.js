@@ -1,6 +1,7 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const DropdownContext = createContext();
 
@@ -8,6 +9,7 @@ export function DropdownProvider({ children }) {
   const [formSelections, setFormSelections] = useState({});
   const [forms, setForms] = useState([]);
   const [nextId, setNextId] = useState(1);
+  const queryClient = useQueryClient();
 
   const dropDownOptions = [
     {
@@ -109,6 +111,62 @@ export function DropdownProvider({ children }) {
       color: "#FF0000",
     },
   ];
+
+  const { data: linksData, isPending } = useQuery({
+    queryKey: ["links"],
+    queryFn: async () => {
+      const response = await fetch("/api/links/get");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch links");
+      }
+
+      return data;
+    },
+  });
+
+  useEffect(() => {
+    if (linksData?.links) {
+      const loadedForms = [];
+      const loadedSelections = {};
+      let maxId = 0;
+
+      linksData.links.forEach((link) => {
+        const formId = link.order + 1;
+        loadedForms.push({ id: formId });
+        loadedSelections[formId] = link.platform;
+        maxId = Math.max(maxId, formId);
+      });
+
+      setForms(loadedForms);
+      setFormSelections(loadedSelections);
+      setNextId(maxId + 1);
+    }
+  }, [linksData]);
+
+  const saveLinksMutation = useMutation({
+    mutationFn: async (links) => {
+      const response = await fetch("/api/links/post", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ links }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to save links");
+      }
+
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["links"] });
+    },
+  });
 
   const addForm = () => {
     setForms([...forms, { id: nextId }]);
