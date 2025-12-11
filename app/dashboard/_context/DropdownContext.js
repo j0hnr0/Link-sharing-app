@@ -7,6 +7,7 @@ const DropdownContext = createContext();
 
 export function DropdownProvider({ children }) {
   const [formSelections, setFormSelections] = useState({});
+  const [formUrls, setFormUrls] = useState({});
   const [forms, setForms] = useState([]);
   const [nextId, setNextId] = useState(1);
   const queryClient = useQueryClient();
@@ -130,17 +131,20 @@ export function DropdownProvider({ children }) {
     if (linksData?.links) {
       const loadedForms = [];
       const loadedSelections = {};
+      const loadedUrls = {};
       let maxId = 0;
 
       linksData.links.forEach((link) => {
         const formId = link.order + 1;
         loadedForms.push({ id: formId });
         loadedSelections[formId] = link.platform;
+        loadedUrls[formId] = link.url;
         maxId = Math.max(maxId, formId);
       });
 
       setForms(loadedForms);
       setFormSelections(loadedSelections);
+      setFormUrls(loadedUrls);
       setNextId(maxId + 1);
     }
   }, [linksData]);
@@ -168,6 +172,16 @@ export function DropdownProvider({ children }) {
     },
   });
 
+  const saveLinks = () => {
+    const linksToSave = forms.map((form, index) => ({
+      platform: formSelections[form.id] || "frontendmentor",
+      url: formUrls[form.id] || "",
+      order: index,
+    }));
+
+    saveLinksMutation.mutate(linksToSave);
+  };
+
   const addForm = () => {
     setForms([...forms, { id: nextId }]);
     setNextId(nextId + 1);
@@ -175,6 +189,10 @@ export function DropdownProvider({ children }) {
 
   const removeForm = (idToRemove) => {
     setForms(forms.filter((form) => form.id !== idToRemove));
+    const { [idToRemove]: _, ...restselections } = formSelections;
+    const { [idToRemove]: __, ...restUrls } = formUrls;
+    setFormSelections(restselections);
+    setFormUrls(restUrls);
   };
 
   const setSelectedValue = (formId, value) => {
@@ -186,6 +204,17 @@ export function DropdownProvider({ children }) {
 
   const getSelectedValue = (formId) => {
     return formSelections[formId] || "";
+  };
+
+  const setUrlValue = (formId, url) => {
+    setFormUrls((prev) => ({
+      ...prev,
+      [formId]: url,
+    }));
+  };
+
+  const getUrlValue = (formId) => {
+    return formUrls[formId] || "";
   };
 
   const getAllSelections = (formIds) => {
@@ -208,11 +237,16 @@ export function DropdownProvider({ children }) {
       value={{
         setSelectedValue,
         getSelectedValue,
+        setUrlValue,
+        getUrlValue,
         dropDownOptions,
         getAllSelections,
         forms,
         addForm,
         removeForm,
+        saveLinks,
+        isPending,
+        isSaving: saveLinksMutation.isPending,
       }}
     >
       {children}
