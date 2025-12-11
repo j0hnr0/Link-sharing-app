@@ -11,9 +11,16 @@ import Image from "next/image";
 import { useDropdown } from "../_context/DropdownContext";
 
 export default function LinkFormContainer({ formId, removeForm }) {
-  const { getSelectedValue, setSelectedValue, dropDownOptions } = useDropdown();
+  const {
+    getSelectedValue,
+    setSelectedValue,
+    getUrlValue,
+    setUrlValue,
+    dropDownOptions,
+  } = useDropdown();
 
   const selectedValue = getSelectedValue(formId);
+  const urlValue = getUrlValue(formId);
 
   return (
     <div className="mt-6 p-6 rounded-xl bg-custom-grey-50">
@@ -95,6 +102,8 @@ export default function LinkFormContainer({ formId, removeForm }) {
             type="text"
             id="link"
             name="link"
+            value={urlValue}
+            onChange={(e) => setUrlValue(formId, e.target.value)}
             className="w-full h-full focus:outline-none"
             placeholder="e.g. https://www.github.com/johnappleseed"
           />
