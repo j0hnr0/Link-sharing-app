@@ -9,8 +9,14 @@ import {
 } from "@/components/ui/select";
 import Image from "next/image";
 import { useDropdown } from "../_context/DropdownContext";
+import clsx from "clsx";
 
-export default function LinkFormContainer({ formId, removeForm }) {
+export default function LinkFormContainer({
+  formId,
+  removeForm,
+  register,
+  errors,
+}) {
   const {
     getSelectedValue,
     setSelectedValue,
@@ -88,9 +94,14 @@ export default function LinkFormContainer({ formId, removeForm }) {
           Link
         </small>
         <div
-          className="mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 flex justify-start items-center gap-4
-        focus-within:border-custom-purple-600 
-        focus-within:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]"
+          className={clsx(
+            `mt-2 w-full rounded-lg border border-custom-grey-200 bg-white p-4 flex justify-start items-center gap-4`,
+            {
+              "border-custom-grey-200 focus-within:border-custom-purple-600 focus-within:shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]":
+                !errors?.[`url_${formId}`],
+              "border-red-500": errors?.[`url_${formId}`],
+            }
+          )}
         >
           <Image
             src="/images/icon-link.svg"
@@ -100,14 +111,34 @@ export default function LinkFormContainer({ formId, removeForm }) {
           />
           <input
             type="text"
-            id="link"
-            name="link"
-            value={urlValue}
-            onChange={(e) => setUrlValue(formId, e.target.value)}
+            id={`url_${formId}`}
+            name={`url_${formId}`}
             className="w-full h-full focus:outline-none"
             placeholder="e.g. https://www.github.com/johnappleseed"
+            value={urlValue}
+            {...register(`url_${formId}`, {
+              required: "Can't be empty",
+              validate: {
+                validUrl: (value) => {
+                  try {
+                    new URL(value);
+                    return true;
+                  } catch {
+                    return "Please enter a valid URL";
+                  }
+                },
+              },
+              onChange: (e) => setUrlValue(formId, e.target.value),
+            })}
           />
         </div>
+        {errors?.[`url_${formId}`] && (
+          <div className="mt-2 flex justify-end">
+            <small className="instrument-sans font-normal text-xs text-red-500">
+              {errors?.[`url_${formId}`].message}
+            </small>
+          </div>
+        )}
       </div>
     </div>
   );

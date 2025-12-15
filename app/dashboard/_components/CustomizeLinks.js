@@ -5,12 +5,25 @@ import EmptyLinkContainer from "./EmptyLinkContainer";
 import { useDropdown } from "../_context/DropdownContext";
 import clsx from "clsx";
 import LinkFormSkeleton from "../links/_components/LinkFormSkeleton";
+import { useForm } from "react-hook-form";
 
 export default function CustomizeLinks({ forms, addForm, removeForm }) {
   const { saveLinks, isSaving, isPending } = useDropdown();
 
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onSubmit = () => {
+    saveLinks();
+  }
+
   return (
-    <div
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      noValidate
       className="w-[60%]
         max-custom-md:w-full"
     >
@@ -49,6 +62,8 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
               key={form.id}
               formId={form.id}
               removeForm={removeForm}
+              register={register}
+              errors={errors}
             />
           ))
         ) : (
@@ -62,8 +77,7 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
       >
         <div className="flex justify-end">
           <button
-            type="button"
-            onClick={saveLinks}
+            type="submit"
             disabled={isSaving}
             className={clsx(
               "w-[85px] rounded-lg py-4 text-center max-custom-semism:w-full",
@@ -80,6 +94,6 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
           </button>
         </div>
       </div>
-    </div>
+    </form>
   );
 }
