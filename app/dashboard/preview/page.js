@@ -106,7 +106,7 @@ export default function Preview() {
 
         <ul className="mt-[32px]">
           {selections.length === 0
-            ? Array(5)
+            ? Array(3)
                 .fill(null)
                 .map((_, index) => (
                   <li
