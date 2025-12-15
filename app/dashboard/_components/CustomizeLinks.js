@@ -3,9 +3,11 @@
 import LinkFormContainer from "./LinkFormContainer";
 import EmptyLinkContainer from "./EmptyLinkContainer";
 import { useDropdown } from "../_context/DropdownContext";
+import clsx from "clsx";
+import LinkFormSkeleton from "../links/_components/LinkFormSkeleton";
 
 export default function CustomizeLinks({ forms, addForm, removeForm }) {
-  const { saveLinks, isSaving } = useDropdown();
+  const { saveLinks, isSaving, isPending } = useDropdown();
 
   return (
     <div
@@ -37,7 +39,11 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
           </span>
         </button>
 
-        {forms.length > 0 ? (
+        {isPending ? (
+          <>
+            <LinkFormSkeleton />
+          </>
+        ) : forms.length > 0 ? (
           forms.map((form) => (
             <LinkFormContainer
               key={form.id}
@@ -59,11 +65,17 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
             type="button"
             onClick={saveLinks}
             disabled={isSaving}
-            className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 opacity-25 cursor-pointer
-                max-custom-semism:w-full"
+            className={clsx(
+              "w-[85px] rounded-lg py-4 text-center max-custom-semism:w-full",
+              {
+                "bg-custom-purple-600 cursor-pointer": !isSaving,
+                "bg-custom-purple-300 cursor-not-allowed shadow-[0_0_20px_4px_rgba(139,92,246,0.3)]":
+                  isSaving,
+              }
+            )}
           >
             <span className="instrument-sans font-semibold text-base text-white">
-              Save
+              {isSaving ? "Saving..." : "Save"}
             </span>
           </button>
         </div>

@@ -2,6 +2,7 @@
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 const DropdownContext = createContext();
 
@@ -169,6 +170,7 @@ export function DropdownProvider({ children }) {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["links"] });
+      toast.success("Links saved successfully!");
     },
   });
 

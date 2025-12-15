@@ -5,7 +5,7 @@ import { saveUserLinks } from "@/app/lib/link-service";
 
 export async function POST(request) {
   try {
-    const session = getServerSession(authOptions);
+    const session = await getServerSession(authOptions);
 
     if (!session?.user?.id) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
