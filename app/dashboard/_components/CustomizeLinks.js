@@ -1,7 +1,12 @@
+"use client";
+
 import LinkFormContainer from "./LinkFormContainer";
 import EmptyLinkContainer from "./EmptyLinkContainer";
+import { useDropdown } from "../_context/DropdownContext";
 
 export default function CustomizeLinks({ forms, addForm, removeForm }) {
+  const { saveLinks, isSaving } = useDropdown();
+
   return (
     <div
       className="w-[60%]
@@ -52,6 +57,8 @@ export default function CustomizeLinks({ forms, addForm, removeForm }) {
         <div className="flex justify-end">
           <button
             type="button"
+            onClick={saveLinks}
+            disabled={isSaving}
             className="w-[85px] rounded-lg py-4 text-center bg-custom-purple-600 opacity-25 cursor-pointer
                 max-custom-semism:w-full"
           >
