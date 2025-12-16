@@ -7,13 +7,9 @@ import { useQuery } from "@tanstack/react-query";
 import NameSkeleton from "./_components/NameSkeleton";
 
 export default function Preview() {
-  const { getAllSelections, forms } = useDropdown();
+  const { dropDownOptions } = useDropdown();
 
-  const formIds = forms.map((form) => form.id);
-
-  const selections = getAllSelections(formIds);
-
-  const { data: linksData } = useQuery({
+  const { data: linksData, isPending: linksPending } = useQuery({
     queryKey: ["linksPreview"],
     queryFn: async () => {
       const response = await fetch("/api/links/get");
@@ -27,8 +23,7 @@ export default function Preview() {
     },
   });
 
-  console.log("selections: ", selections);
-  console.log("Links: ", linksData);
+  const links = linksData?.links || [];
 
   const { data: profileInfo, isPending } = useQuery({
     queryKey: ["profilePreview"],
@@ -122,7 +117,7 @@ export default function Preview() {
         )}
 
         <ul className="mt-[32px]">
-          {selections.length === 0
+          {linksPending || links.length === 0
             ? Array(3)
                 .fill(null)
                 .map((_, index) => (
@@ -131,39 +126,51 @@ export default function Preview() {
                     className="mt-6 w-full h-[56px] rounded-[8px] bg-custom-grey-100"
                   ></li>
                 ))
-            : selections.map((selection) => (
-                <li key={selection.formId}>
-                  <a
-                    href=""
-                    target="_blank"
-                    style={{ backgroundColor: selection.color }}
-                    className="mt-6 w-full h-[56px] rounded-[8px] flex items-center justify-between px-4 text-white cursor-pointer"
-                  >
-                    <div className="flex items-center gap-2">
-                      <Image
-                        src={`/images/${selection.fileName}`}
-                        width={20}
-                        height={20}
-                        alt={selection.alt}
-                        className="brightness-0 invert"
-                      />
-                      <span className="instrument-sans text-base font-normal text-white">
-                        {selection.text}
-                      </span>
-                    </div>
+            : links.map((link) => {
+                const platformInfo = dropDownOptions.find(
+                  (option) => option.id === link.platform
+                );
 
-                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                      <path
-                        d="M2.66669 8H13.3334M13.3334 8L8.00002 2.66667M13.3334 8L8.00002 13.3333"
-                        stroke="white"
-                        strokeWidth="2"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
-                    </svg>
-                  </a>
-                </li>
-              ))}
+                return (
+                  <li key={link.id}>
+                    <a
+                      href={link.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ backgroundColor: platformInfo?.color }}
+                      className="mt-6 w-full h-[56px] rounded-[8px] flex items-center justify-between px-4 text-white cursor-pointer"
+                    >
+                      <div className="flex items-center gap-2">
+                        <Image
+                          src={`/images/${platformInfo?.fileName}`}
+                          width={20}
+                          height={20}
+                          alt={platformInfo?.alt || link.platform}
+                          className="brightness-0 invert"
+                        />
+                        <span className="instrument-sans text-base font-normal text-white">
+                          {platformInfo?.text || link.platform}
+                        </span>
+                      </div>
+
+                      <svg
+                        width="16"
+                        height="16"
+                        viewBox="0 0 16 16"
+                        fill="none"
+                      >
+                        <path
+                          d="M2.66669 8H13.3334M13.3334 8L8.00002 2.66667M13.3334 8L8.00002 13.3333"
+                          stroke="white"
+                          strokeWidth="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </a>
+                  </li>
+                );
+              })}
         </ul>
       </div>
     </main>
