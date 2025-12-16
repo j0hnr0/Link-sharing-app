@@ -2,13 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useDropdown } from "../_context/DropdownContext";
 import { useQuery } from "@tanstack/react-query";
 import NameSkeleton from "./_components/NameSkeleton";
+import { dropDownOptions } from "@/app/lib/platformData";
 
 export default function Preview() {
-  const { dropDownOptions } = useDropdown();
-
   const { data: linksData, isPending: linksPending } = useQuery({
     queryKey: ["linksPreview"],
     queryFn: async () => {
