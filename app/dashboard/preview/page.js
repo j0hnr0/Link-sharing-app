@@ -13,6 +13,23 @@ export default function Preview() {
 
   const selections = getAllSelections(formIds);
 
+  const { data: linksData } = useQuery({
+    queryKey: ["linksPreview"],
+    queryFn: async () => {
+      const response = await fetch("/api/links/get");
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Failed to fetch links");
+      }
+
+      return data;
+    },
+  });
+
+  console.log("selections: ", selections);
+  console.log("Links: ", linksData);
+
   const { data: profileInfo, isPending } = useQuery({
     queryKey: ["profilePreview"],
     queryFn: async () => {
@@ -115,33 +132,36 @@ export default function Preview() {
                   ></li>
                 ))
             : selections.map((selection) => (
-                <li
-                  key={selection.formId}
-                  style={{ backgroundColor: selection.color }}
-                  className="mt-6 w-full h-[56px] rounded-[8px] flex items-center justify-between px-4 text-white"
-                >
-                  <div className="flex items-center gap-2">
-                    <Image
-                      src={`/images/${selection.fileName}`}
-                      width={20}
-                      height={20}
-                      alt={selection.alt}
-                      className="brightness-0 invert"
-                    />
-                    <span className="instrument-sans text-base font-normal text-white">
-                      {selection.text}
-                    </span>
-                  </div>
+                <li key={selection.formId}>
+                  <a
+                    href=""
+                    target="_blank"
+                    style={{ backgroundColor: selection.color }}
+                    className="mt-6 w-full h-[56px] rounded-[8px] flex items-center justify-between px-4 text-white cursor-pointer"
+                  >
+                    <div className="flex items-center gap-2">
+                      <Image
+                        src={`/images/${selection.fileName}`}
+                        width={20}
+                        height={20}
+                        alt={selection.alt}
+                        className="brightness-0 invert"
+                      />
+                      <span className="instrument-sans text-base font-normal text-white">
+                        {selection.text}
+                      </span>
+                    </div>
 
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <path
-                      d="M2.66669 8H13.3334M13.3334 8L8.00002 2.66667M13.3334 8L8.00002 13.3333"
-                      stroke="white"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                      <path
+                        d="M2.66669 8H13.3334M13.3334 8L8.00002 2.66667M13.3334 8L8.00002 13.3333"
+                        stroke="white"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </a>
                 </li>
               ))}
         </ul>
