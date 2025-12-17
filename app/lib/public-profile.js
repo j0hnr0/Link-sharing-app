@@ -1,9 +1,15 @@
 import prisma from "./prisma";
 
-export async function getPublicUserCard({ id }) {
+export async function getLinksPublic({ id }) {
   const card = await prisma.card.findUnique({
     where: { id: id },
-    include: { links: true },
+    include: {
+      links: {
+        orderBy: {
+          order: "asc",
+        },
+      },
+    },
   });
 
   if (!card) {
@@ -11,4 +17,18 @@ export async function getPublicUserCard({ id }) {
   }
 
   return card;
+}
+
+export async function getProfilePublic({ id }) {
+  const profileInfo = await prisma.card.findUnique({
+    where: {
+      id: id,
+    },
+  });
+
+  if (!profileInfo) {
+    throw new Error("Profile not found");
+  }
+
+  return profileInfo;
 }

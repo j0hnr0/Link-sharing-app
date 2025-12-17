@@ -1,4 +1,5 @@
-import { getPublicUserCard } from "@/app/lib/public-profile";
+
+import { getProfilePublic } from "@/app/lib/public-profile";
 import { NextResponse } from "next/server";
 
 export async function GET(request) {
@@ -10,10 +11,14 @@ export async function GET(request) {
       return NextResponse.json({ message: "ID not found" }, { status: 400 });
     }
 
-    const card = await getPublicUserCard({ id });
+    const profileInfo = await getProfilePublic({ id });
 
-    return NextResponse.json(card, { status: 200 });
+    return NextResponse.json(profileInfo, { status: 200 });
   } catch (error) {
+    if (error.message === "Profile not found") {
+      return NextResponse.json({ message: error.message }, { status: 404 });
+    }
+
     return NextResponse.json(
       { message: error.message || "Internal server error" },
       { status: 500 }
