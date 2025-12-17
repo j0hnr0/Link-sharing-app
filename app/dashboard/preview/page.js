@@ -3,8 +3,9 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import NameSkeleton from "./_components/NameSkeleton";
 import { dropDownOptions } from "@/app/lib/platformData";
+import NameSkeleton from "@/app/_components/NameSkeleton";
+import toast from "react-hot-toast";
 
 export default function Preview() {
   const { data: linksData, isPending: linksPending } = useQuery({
@@ -37,6 +38,16 @@ export default function Preview() {
     },
   });
 
+  const handleShare = async () => {
+    if (!profileInfo?.id) return;
+
+    const shareUrl = `${window.location.origin}/profile/${profileInfo.id}`;
+
+    await navigator.clipboard.writeText(shareUrl);
+
+    toast.success("Link copied to clipboard!");
+  };
+
   return (
     <main className="p-6">
       <div
@@ -60,7 +71,9 @@ export default function Preview() {
 
         <button
           type="button"
-          className="w-full max-w-[127px] bg-custom-purple-600 rounded-[8px] py-4 text-center
+          onClick={handleShare}
+          disabled={!profileInfo?.id}
+          className="w-full max-w-[127px] bg-custom-purple-600 rounded-[8px] py-4 text-center cursor-pointer
           max-custom-sm:max-w-none"
         >
           <p className="instrument-sans font-semibold text-base text-white">
