@@ -4,12 +4,12 @@ import Link from "next/link";
 import FormBackground from "@/_components/FormBackground";
 import LoginForm from "./_components/LoginForm";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./contexts/auth-provider";
 import LoadingComponent from "./_components/LoadingComponent";
 
-export default function Home() {
+function HomeContent() {
   const searchParams = useSearchParams();
   const hasShownToast = useRef(false);
   const { isAuthenticated, loading } = useAuth();
@@ -51,5 +51,13 @@ export default function Home() {
         </div>
       </div>
     </FormBackground>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<LoadingComponent />}>
+      <HomeContent />
+    </Suspense>
   );
 }
