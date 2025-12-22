@@ -50,12 +50,12 @@ export default function ProfileImageUpload({
     if (!file) return;
 
     if (!file.type.startsWith("image/")) {
-      alert("Please upload an image file");
+      toast.error("Please upload an image file");
       return;
     }
 
     if (file.size > 5 * 1024 * 1024) {
-      alert("Image must be less than 5MB");
+      toast.error("Image must be less than 5MB");
       return;
     }
 
