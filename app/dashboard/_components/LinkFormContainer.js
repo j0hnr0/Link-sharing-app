@@ -114,7 +114,7 @@ export default function LinkFormContainer({
             id={`url_${formId}`}
             name={`url_${formId}`}
             className="w-full h-full focus:outline-none"
-            placeholder="e.g. https://www.github.com/johnappleseed"
+            placeholder="e.g. https://www.github.com/banskieeee"
             value={urlValue}
             {...register(`url_${formId}`, {
               required: "Can't be empty",

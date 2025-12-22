@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useAuth } from "./contexts/auth-provider";
+import LoadingComponent from "./_components/LoadingComponent";
 
 export default function Home() {
   const searchParams = useSearchParams();
@@ -28,13 +29,7 @@ export default function Home() {
   }, [isAuthenticated, router]);
 
   if (loading || isAuthenticated) {
-    return (
-      <div className="flex items-center justify-center min-h-screen gap-2">
-        <div className="w-3 h-3 bg-custom-purple-600 rounded-full animate-bounce [animation-delay:-0.3s]"></div>
-        <div className="w-3 h-3 bg-custom-purple-600 rounded-full animate-bounce [animation-delay:-0.15s]"></div>
-        <div className="w-3 h-3 bg-custom-purple-600 rounded-full animate-bounce"></div>
-      </div>
-    );
+    return <LoadingComponent />;
   }
 
   return (
