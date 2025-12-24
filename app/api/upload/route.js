@@ -1,10 +1,22 @@
-import { join } from "path";
 import { NextResponse } from "next/server";
-import { existsSync } from "fs";
-import { mkdir, writeFile } from "fs/promises";
+import { createClient } from "@supabase/supabase-js";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
+
+// Create Supabase client
+const supabase = createClient(
+  process.env.NEXT_PUBLIC_SUPABASE_URL,
+  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
+);
 
 export async function POST(request) {
   try {
+    const session = await getServerSession(authOptions);
+    if (!session) {
+      return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+    }
+
+    // Get the uploaded file from form data
     const formData = await request.formData();
     const file = formData.get("image");
 
@@ -30,26 +42,28 @@ export async function POST(request) {
       );
     }
 
-    const bytes = await file.arrayBuffer();
-    const buffer = Buffer.from(bytes);
+    // Create unique filename using user ID and timestamp
+    const fileExt = file.name.split(".").pop();
+    const fileName = `${session.user.id}-${Date.now()}.${fileExt}`;
 
-    // Create uploads directory if it doesn't exist
-    const uploadsDir = join(process.cwd(), "public", "uploads");
-    if (!existsSync(uploadsDir)) {
-      await mkdir(uploadsDir, { recursive: true });
+    // Upload to Supabase Storage
+    const { data, error } = await supabase.storage
+      .from("profile-images")
+      .upload(fileName, file, {
+        cacheControl: "3600",
+        upsert: true,
+      });
+
+    if (error) {
+      return NextResponse.json({ message: error.message }, { status: 500 });
     }
 
-    // Generate unique filename
-    const timestamp = Date.now();
-    const filename = `${timestamp}-${file.name}`;
-    const filepath = join(uploadsDir, filename);
+    // Get the public URL for the uploaded image
+    const {
+      data: { publicUrl },
+    } = supabase.storage.from("profile-images").getPublicUrl(fileName);
 
-    // Save file
-    await writeFile(filepath, buffer);
-
-    const imageUrl = `/uploads/${filename}`;
-
-    return NextResponse.json({ imageUrl }, { status: 200 });
+    return NextResponse.json({ imageUrl: publicUrl }, { status: 200 });
   } catch (error) {
     return NextResponse.json(
       { message: error.message || "Upload failed" },
