@@ -2,21 +2,42 @@ import { NextResponse } from "next/server";
 import { createClient } from "@supabase/supabase-js";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
-
-// Create Supabase client
-const supabase = createClient(
-  process.env.NEXT_PUBLIC_SUPABASE_URL,
-  process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY
-);
+import jwt from "jsonwebtoken";
 
 export async function POST(request) {
   try {
+    // Check NextAuth authentication
     const session = await getServerSession(authOptions);
     if (!session) {
       return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
     }
 
-    // Get the uploaded file from form data
+    // Create a Supabase-compatible JWT
+    const supabaseAccessToken = jwt.sign(
+      {
+        aud: "authenticated",
+        exp: Math.floor(Date.now() / 1000) + 60 * 60, // 1 hour expiry
+        sub: session.user.id,
+        email: session.user.email,
+        role: "authenticated",
+      },
+      process.env.SUPABASE_JWT_SECRET
+    );
+
+    // Create Supabase client with the signed JWT
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL,
+      process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
+      {
+        global: {
+          headers: {
+            Authorization: `Bearer ${supabaseAccessToken}`,
+          },
+        },
+      }
+    );
+
+    // Get the uploaded file
     const formData = await request.formData();
     const file = formData.get("image");
 
@@ -34,7 +55,6 @@ export async function POST(request) {
       );
     }
 
-    // 5MB limit
     if (file.size > 5 * 1024 * 1024) {
       return NextResponse.json(
         { message: "File size must be less than 5MB" },
@@ -42,7 +62,7 @@ export async function POST(request) {
       );
     }
 
-    // Create unique filename using user ID and timestamp
+    // Create unique filename
     const fileExt = file.name.split(".").pop();
     const fileName = `${session.user.id}-${Date.now()}.${fileExt}`;
 
@@ -55,16 +75,18 @@ export async function POST(request) {
       });
 
     if (error) {
+      console.error("Upload error:", error);
       return NextResponse.json({ message: error.message }, { status: 500 });
     }
 
-    // Get the public URL for the uploaded image
+    // Get public URL
     const {
       data: { publicUrl },
     } = supabase.storage.from("profile-images").getPublicUrl(fileName);
 
     return NextResponse.json({ imageUrl: publicUrl }, { status: 200 });
   } catch (error) {
+    console.error("Server error:", error);
     return NextResponse.json(
       { message: error.message || "Upload failed" },
       { status: 500 }
